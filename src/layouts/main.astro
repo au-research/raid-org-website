@@ -4,9 +4,8 @@ import Footer from "@/components/layout-components/footer.astro";
 
 import "@fontsource/figtree";
 
-interface Props {
-  title: string;
-}
+const { pathname } = Astro.url;
+const currentPage = pathname.split("/")[pathname.split("/").length - 1];
 ---
 
 <!doctype html>
@@ -24,13 +23,13 @@ interface Props {
       }
     </style>
   </head>
-  <body>
-    <Navbar />
-    <div>
-      <main>
-        <slot />
-      </main>
-    </div>
+  <body class="flex flex-col min-h-dvh">
+    {currentPage === "search" ? <Navbar showSearchbar={false} /> : <Navbar />}
+
+    <main class="flex-grow">
+      <slot />
+    </main>
+
     <Footer />
   </body>
 </html>

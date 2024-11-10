@@ -1,5 +1,6 @@
 ---
 import raidLogoDark from "@/images/logos/raid-logo-dark.svg";
+import SearchBar from "@/components/SearchBar.astro";
 
 const links = [
   {
@@ -14,30 +15,59 @@ const links = [
     href: "/raid-org-website/contact",
     text: "Contact",
   },
+  {
+    href: "/raid-org-website/search",
+    text: "Search",
+  },
 ];
+
+const { showSearchbar = true } = Astro.props as { showSearchbar?: boolean };
 ---
 
-<header class="inset-x-0 top-0 z-50 flex h-32 shadow bg-raidPrimary text-white">
-  <div
-    class="mx-auto flex w-full max-w-12xl items-center px-4 sm:px-6 lg:px-8 gap-6 justify-between"
-  >
-    <a href="/">
-      <div class="flex flex-1 items-center gap-x-6">
-        <img src={raidLogoDark.src} class="h-20 w-auto" alt="" />
+<header
+  class="inset-x-0 top-0 z-50 flex h-32 shadow bg-raidPrimary text-white items-center"
+>
+  <div class="mx-auto w-full items-center px-4 sm:px-6 lg:px-8 gap-6">
+    <div class="grid grid-cols-3 align-middle items-center">
+      <a href="/raid-org-website/">
+        <div class="flex flex-1 items-center gap-x-6">
+          <img src={raidLogoDark.src} class="h-20 w-auto" alt="" />
+        </div>
+      </a>
+      <div class="items-center">
+        <SearchBar placeholder="Search..." />
+        <!-- {
+          showSearchbar && (
+            <div class="relative flex w-full">
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Enter search term..."
+                class="pl-3 block w-full rounded-md border-0 py-1.5 pr-14 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-raidPrimary sm:text-sm/6"
+              />
+              <div class="absolute inset-y-0 right-0 flex py-1.5 pr-1.5">
+                <kbd class="inline-flex items-center rounded border border-gray-200 px-1 font-sans text-xs text-gray-400">
+                  Enter &crarr;
+                </kbd>
+              </div>
+            </div>
+          )
+        } -->
       </div>
-    </a>
 
-    <nav class="flex gap-x-11 text-sm font-semibold">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            class="text-white hover:text-gray-200 cursor-pointer font-extralight"
-          >
-            {link.text}
-          </a>
-        ))
-      }
-    </nav>
+      <nav class="flex gap-x-11 text-sm font-semibold justify-end">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              class="text-white hover:text-gray-200 cursor-pointer font-extralight"
+            >
+              {link.text}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
   </div>
 </header>
