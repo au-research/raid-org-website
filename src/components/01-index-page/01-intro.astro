@@ -1,11 +1,14 @@
 ---
+import { Image } from "astro:assets";
+import localBirdImage from "../../images/backgrounds/background-laptop.jpg";
+
 const title =
   "A persistent identifier and global registry for identifying, tracking, and sharing research projects";
 ---
 
 <div
   class="bg-cover bg-center"
-  style="background-image: url('/images/backgrounds/background-laptop.jpg');"
+  style=`background-image: url(${localBirdImage.src});`
 >
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-[380px]">
     <div class="grid grid-cols-2 h-full">
