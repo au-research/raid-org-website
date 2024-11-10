@@ -1,0 +1,38 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const textblocks = [
+  `'RAiD' is an acronym for 'Research Activity Identifier'.`,
+  `It is a unique, persistent identifier (PID) developed by the ARDC to identify research projects and activities for access by research communities worldwide.`,
+  `RAiD creates a single place for storing and retrieving project information using a RAiD name (identifier) and its associated metadata record.`,
+  `Each RAiD metadata record stores project or activity information for long-term discovery, resolution, access, sharing, reporting and other uses by the global research community.`,
+];
+
+const links = [
+  {
+    text: "Learn more",
+    href: "https://documentation.raid.org/raid/?l=en",
+  },
+  {
+    text: "Learn how to recognise a RAiD name",
+    href: "https://documentation.raid.org/raid/?l=en",
+  },
+  {
+    text: "Learn what information goes into a RAiD metadata record Learn what information goes into a RAiD metadata record",
+    href: "https://documentation.raid.org/raid/?l=en",
+  },
+];
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col gap-3 py-12">
+    {
+      textblocks.map((textblock) => (
+        <p class="text-lg text-gray-700">{textblock}</p>
+      ))
+    }
+    <div class="grid grid-cols-3 gap-12">
+      {links.map((link) => <RaidButton href={link.href} label={link.text} />)}
+    </div>
+  </div>
+</div>

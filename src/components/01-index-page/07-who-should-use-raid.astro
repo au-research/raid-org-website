@@ -1,0 +1,73 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const title = "Who should use RAiD?";
+
+const subtitle =
+  "RAiD is designed for use worldwide with project information that can be made public (temporary embargoes are supported)";
+
+const tiles = [
+  {
+    title: "Research infrastructure providers",
+    description:
+      "Organisations that provide research infrastructure or services such as imaging, HPC, or specialised softare for researchers (and want to track outcomes from this usage)",
+    icon: "/images/icons/research-icon.png",
+  },
+  {
+    title: "Funders",
+    description:
+      "Organisations that fund research or research infrastructure (and want to track the outcomes and impact of this funding)",
+    icon: "/images/icons/funding-icon.png",
+  },
+  {
+    title: "Research organisations",
+    description:
+      "Organisations wishing to identify and track project inputs and outputs (e.g. contributors, collaborators, data sets, samples, instruments, tools, grants, events, grey literature, journal publications, and all associated PIDs)",
+    icon: "/images/icons/organisation-icon.png",
+  },
+  {
+    title: "Researchers",
+    description:
+      "Researchers and research teams wishing to track and share information about their projects",
+    icon: "/images/icons/research-organisation-icon.png",
+  },
+  {
+    title: "Other PID providers",
+    description:
+      "Other PID providers that want to integrate project PIDs or leverage proect matadata to help build research graphs",
+    icon: "/images/icons/researcher-icon.png",
+  },
+];
+---
+
+<div class="bg-raidGray">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col gap-3">
+      <h1 class="text-raidGray font-semibold text-2xl">{title}</h1>
+      <h3 class="text-raidGray text-base">{subtitle}</h3>
+    </div>
+
+    <div
+      class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-3 sm:grid-cols-5 gap-6 min-h-96 place-items-cente"
+    >
+      {
+        tiles.map((el) => (
+          <div class="h-full w-full py-12">
+            <div class="bg-raidGray flex flex-col items-center justify-start text-center gap-2 h-full">
+              <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
+              <h2 class="text-lg text-raidTextPrimary">{el.title}</h2>
+              <p class="text-xs font-light">{el.description}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="flex justify-center border-2 p-2">
+      <RaidButton
+        label="RAiD uses"
+        href="https://documentation.raid.org/raid/?l=en"
+      />
+    </div>
+  </div>
+</div>

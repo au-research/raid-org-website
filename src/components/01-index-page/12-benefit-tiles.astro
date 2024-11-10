@@ -1,0 +1,59 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const tiles = [
+  {
+    title: "",
+    description: "Empower and encourage your research organisation to get RAiD",
+    icon: "/images/icons/organisation-icon.png",
+  },
+  {
+    title: "",
+    description:
+      "Customise and control the information your research organisation would like kept and shared for a RAiD project or activity",
+    icon: "/images/icons/teamwork-icon.png",
+  },
+  {
+    title: "",
+    description:
+      "Accurately store and view RAiD metadata information whenever needed at any stage of a project or activity, including after its closure",
+    icon: "/images/icons/global-data-icon.png",
+  },
+  {
+    title: "",
+    description:
+      "Track future funding requirements, project outcomes and changes made over time for a RAiD project or activity",
+    icon: "/images/icons/funding-icon.png",
+  },
+  {
+    title: "",
+    description:
+      "Fast-track project administration and save considerable research time and money",
+    icon: "/images/icons/time-icon.png",
+  },
+];
+---
+
+<div class="bg-raidSecondary">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-8">
+    <div
+      class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-5 gap-6 min-h-96 place-items-cente"
+    >
+      {
+        tiles.map((el) => (
+          <div class="h-full w-full py-12">
+            <div class="bg-white flex flex-col items-center justify-start text-center gap-2 h-full">
+              <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
+              <h2 class="text-lg text-raidTextPrimary">{el.title}</h2>
+              <p class="text-xs font-light px-2">{el.description}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="flex justify-center p-2">
+      <RaidButton label="Learn more" href="https://raid.org/uses" />
+    </div>
+  </div>
+</div>

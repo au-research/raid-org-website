@@ -1,0 +1,52 @@
+---
+const title = "Elsewhere (global)";
+const listItems = [
+  {
+    text: "As the global Registration Authority, the ARDC is committed to the timely rollout of RAiD for all eigible users worldwide.",
+  },
+  {
+    text: "At this time, RAiD is offered as a <strong>free service</strong>, with no cost to organisations or individuals.",
+  },
+  {
+    text: "<strong>Research organisations</strong> located outside Australia, New Zealand, or Europe can offer RAiD to their staff by signing a Service Schedule with the ARDC, contact us.",
+    links: [
+      {
+        url: "mailto:contact@raid.org?subject=Organisational%20(global)%20RAiD%20access%20request&body=Dear%20RAiD%20team%2C%0A%0AOur%20organisation%20would%20like%20to%20offer%20RAiD%20to%20our%20staff.%0A%0A%5Bplease%20add%20the%20name%20and%20location%20of%20your%20organisation%2C%20along%20with%20any%20other%20pertinent%20information%5D",
+        text: "contact us",
+      },
+    ],
+  },
+  {
+    text: "<strong>Individual researchers</strong> outside Australasia or Europe will have direct access to RAiDs. To register your interest, contact us.",
+    links: [
+      {
+        url: "mailto:contact@raid.org?subject=Individual%20(global)%20RAiD%20access%20request&body=Dear%20RAiD%20team%2C%0A%0AI%20would%20like%20to%20start%20using%20RAiD%20for%20my%20projects.%0A%0A%5Bplease%20add%20the%20name%20of%20your%20organisation%2C%20your%20location%2C%20and%20other%20pertinent%20information%5D",
+        text: "contact us",
+      },
+    ],
+  },
+];
+---
+
+<h3 class="text-raidTextPrimary text-base">{title}</h3>
+
+<ul class="list-disc text-sm pl-12">
+  {
+    listItems.map((item) => (
+      <li
+        set:html={
+          item.links
+            ? item.links.reduce(
+                (acc, link) =>
+                  acc.replace(
+                    link.text,
+                    `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
+                  ),
+                item.text
+              )
+            : item.text
+        }
+      />
+    ))
+  }
+</ul>

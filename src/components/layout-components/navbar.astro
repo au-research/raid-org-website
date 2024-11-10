@@ -1,0 +1,45 @@
+---
+const links = [
+  {
+    href: "/",
+    text: "Home",
+  },
+  {
+    href: "/about",
+    text: "About",
+  },
+  {
+    href: "/contact",
+    text: "Contact",
+  },
+];
+---
+
+<header class="inset-x-0 top-0 z-50 flex h-32 shadow bg-raidPrimary text-white">
+  <div
+    class="mx-auto flex w-full max-w-12xl items-center px-4 sm:px-6 lg:px-8 gap-6 justify-between"
+  >
+    <a href="/">
+      <div class="flex flex-1 items-center gap-x-6">
+        <img
+          src="/images/logos/raid-logo-dark.svg"
+          class="h-20 w-auto"
+          alt=""
+        />
+      </div>
+    </a>
+
+    <nav class="flex gap-x-11 text-sm font-semibold">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="text-white hover:text-gray-200 cursor-pointer font-extralight"
+          >
+            {link.text}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

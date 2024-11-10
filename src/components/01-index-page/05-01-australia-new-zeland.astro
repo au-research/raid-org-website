@@ -1,0 +1,53 @@
+---
+const title = "In Australia and New Zealand";
+
+const listItems = [
+  {
+    text: "The ARDC is the RAiD Registration Agency for Australia and New Zealand.",
+  },
+  {
+    text: "RAiD is offered as a <strong>free service</strong> within this region, with no cost to organisations or individuals.",
+  },
+  {
+    text: "<strong>Research organisations</strong> can offer RAiD to their staff by signing a Service Schedule with the ARDC, contact us.",
+    links: [
+      {
+        url: "mailto:contact@raid.org?subject=Organisational%20(Australasia)%20RAiD%20access%20request&body=Dear%20RAiD%20team%2C%0A%0AOur%20organisation%20would%20like%20to%20offer%20RAiD%20to%20our%20staff.%0A%0A%5Bplease%20add%20the%20name%20of%20your%20organisation%20and%20other%20pertinent%20information%5D",
+        text: "contact us",
+      },
+    ],
+  },
+  {
+    text: "<strong>Individual researchers</strong> in Australia at organisations that do not yet offer RAiD should ask their Library or Research Office to request access to the RAiD service from the ARDC. We can facilitate this request, contact us.",
+    links: [
+      {
+        url: "mailto:contact@raid.org?subject='Individual%20(Australasia)%20RAiD%20access%20request&body=Dear%20RAiD%20team%2C%0A%0AI%20would%20like%20to%20start%20using%20RAiD%20for%20my%20projects.%0A%0A%5Bplease%20add%20the%20name%20of%20your%20organisation%20and%20other%20pertinent%20information%5D",
+        text: "contact us",
+      },
+    ],
+  },
+];
+---
+
+<h3 class="text-raidTextPrimary text-base">{title}</h3>
+
+<ul class="list-disc text-sm pl-12">
+  {
+    listItems.map((item) => (
+      <li
+        set:html={
+          item.links
+            ? item.links.reduce(
+                (acc, link) =>
+                  acc.replace(
+                    link.text,
+                    `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
+                  ),
+                item.text
+              )
+            : item.text
+        }
+      />
+    ))
+  }
+</ul>

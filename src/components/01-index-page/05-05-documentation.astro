@@ -1,0 +1,60 @@
+---
+const title = "Documentation and support";
+
+const listItems = [
+  {
+    text: "Please consult the RAiD documentation.",
+    linkTitle: "RAiD documentation",
+    links: [
+      {
+        url: "https://documentation.raid.org/raid/?l=en",
+        text: "RAiD documentation",
+      },
+    ],
+  },
+  {
+    text: "RAiD Metadata specification.",
+    links: [
+      {
+        url: "https://metadata.raid.org/",
+        text: "Metadata specification",
+      },
+    ],
+  },
+  {
+    text: "<strong>If you require help with RAiD and are an ARDC user</strong>, you can open a support ticket by emailing us.",
+    links: [
+      {
+        url: "mailto:contact@raid.org?subject=RAiD%20help%20request%20(via%20raid.org)&body=Dear%20RAiD%20team%2C%0A%0AI%20would%20like%20to%20open%20a%20support%20request.%0A%0A%5BProvide%20information%20about%20your%20issue%20here%5D",
+        text: "emailing us",
+      },
+    ],
+  },
+  {
+    text: "<strong>SURF support information is coming soon.</strong>",
+  },
+];
+---
+
+<h3 class="text-raidTextPrimary text-base">{title}</h3>
+
+<ul class="list-disc text-sm pl-12">
+  {
+    listItems.map((item) => (
+      <li
+        set:html={
+          item.links
+            ? item.links.reduce(
+                (acc, link) =>
+                  acc.replace(
+                    link.text,
+                    `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
+                  ),
+                item.text
+              )
+            : item.text
+        }
+      />
+    ))
+  }
+</ul>

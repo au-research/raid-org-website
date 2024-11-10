@@ -1,0 +1,39 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const title = "How to resolve a RAiD metadata record";
+
+const textblocks = [
+  `A RAiD metadata record can be accessed by entering a RAiD name's URL into a web browser. RAiDs can also be resolved at raid.org.`,
+  `RAiDs resolve to a standardised landing page that displays the RAiD's metadata record.`,
+  `Some RAiDs are temporarily embargoes and may not be immediately available. Permanently sensitive or confidential information should not be stored in RAiD.`,
+];
+
+const links = [
+  {
+    text: "Learn more",
+    href: "https://documentation.raid.org/raid/?l=en",
+  },
+  {
+    text: "Learn how to recognise an embargoed RAiD",
+    href: "https://documentation.raid.org/raid/?l=en",
+  },
+];
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col gap-3 py-12">
+    <h1 class="text-black font-semibold text-2xl">
+      {title}
+    </h1>
+    {
+      textblocks.map((textblock) => (
+        <p class="text-lg text-gray-700">{textblock}</p>
+      ))
+    }
+
+    <div class="grid grid-cols-3 gap-12">
+      {links.map((link) => <RaidButton href={link.href} label={link.text} />)}
+    </div>
+  </div>
+</div>

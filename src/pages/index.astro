@@ -1,16 +1,34 @@
 ---
-
+import Layout from "@/layouts/main.astro";
+import Intro from "@/components/01-index-page/01-intro.astro";
+import SubIntro from "@/components/01-index-page/02-sub-intro.astro";
+import NewToRaid from "@/components/01-index-page/03-new-to-raid.astro";
+import FeatureCards from "@/components/01-index-page/04-feature-cards.astro";
+import GetRaidNow from "@/components/01-index-page/05-00-get-raid-now.astro";
+import RaidValue from "@/components/01-index-page/06-raid-value.astro";
+import WhoShouldUseRaid from "@/components/01-index-page/07-who-should-use-raid.astro";
+import WhyGetRaid from "@/components/01-index-page/08-why-get-raid.astro";
+import FairAccess from "@/components/01-index-page/09-fair-access.astro";
+import FairRaid from "@/components/01-index-page/10-fair-raid.astro";
+import RaidBenefits from "@/components/01-index-page/11-raid-benefits.astro";
+import BenefitTiles from "@/components/01-index-page/12-benefit-tiles.astro";
+import WorthInvesting from "@/components/01-index-page/13-worth-investing.astro";
+import KeyIssues from "@/components/01-index-page/14-key-issues.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="main">
+  <Intro />
+  <SubIntro />
+  <NewToRaid />
+  <FeatureCards />
+  <GetRaidNow />
+  <RaidValue />
+  <WhoShouldUseRaid />
+  <WhyGetRaid />
+  <FairAccess />
+  <FairRaid />
+  <RaidBenefits />
+  <BenefitTiles />
+  <WorthInvesting />
+  <KeyIssues />
+</Layout>

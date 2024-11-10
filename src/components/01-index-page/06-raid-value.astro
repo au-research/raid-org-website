@@ -1,0 +1,48 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const title = "RAiD's Value";
+const subtitle = "RAiD is a game-changer for the global research community";
+const tiles = [
+  {
+    description:
+      "Projects and activities can now be uniquely identified and tracked across the research lifecycle",
+    icon: "/images/icons/researcher-icon.png",
+  },
+  {
+    description:
+      "RAiD allows project information to be viewed, shared, managed, and linked to other PIDs globally",
+    icon: "/images/icons/global-data-icon.png",
+  },
+  {
+    description:
+      "RAiD can be integrated into existing software platforms to eliminate double-entry of information",
+    icon: "/images/icons/time-icon.png",
+  },
+];
+---
+
+<div class="bg-white">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col gap-3">
+      <h1 class="text-raidTextPrimary font-semibold text-2xl">{title}</h1>
+      <h3 class="text-raidTextPrimary text-base">{subtitle}</h3>
+    </div>
+    <div class="flex">
+      {
+        tiles.map((el) => (
+          <div class="w-1/3 p-4">
+            <div class="bg-white flex flex-col items-center text-center gap-2 h-full">
+              <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
+              <p class="text-xs font-light px-12 mb-3">{el.description}</p>
+              <RaidButton
+                label="Learn more"
+                href="https://documentation.raid.org/raid/?l=en"
+              />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

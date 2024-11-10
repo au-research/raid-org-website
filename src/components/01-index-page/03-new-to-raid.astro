@@ -1,0 +1,86 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const listItems = [
+  {
+    text: "The Research Activity Identifier (RAiD) is a persistent identifier (PID) and global registry dedicated to research projects.",
+  },
+  {
+    text: "RAiD is governed by ISO standard 23527:2022, with the Australian Research Data Commons (ARDC) as the Registration Authority and lead developer of the system.",
+    links: [
+      {
+        url: "https://www.iso.org/standard/75931.html",
+        text: "ISO standard 23527:2022",
+      },
+      {
+        url: "https://ardc.edu.au/",
+        text: "Australian Research Data Commons (ARDC)",
+      },
+    ],
+  },
+  {
+    text: "RAiD provides a system to store, update, share, and link project information across the research community.",
+  },
+  {
+    text: "RAiD facilitates the administration and reporting of project information.",
+  },
+  {
+    text: "ARDC and DataCite have partnered to deliver RAiD services.",
+    links: [
+      {
+        url: "https://datacite.org/blog/datacite-ardc-announce-partnership-to-deliver-the-raid-service/",
+        text: "ARDC and DataCite have partnered to deliver RAiD services.",
+      },
+    ],
+  },
+  {
+    text: "RAiD is being integrated with European Open Science Cloud infrastructure via the FAIRCORE4EOSC program.",
+    links: [
+      {
+        url: "https://faircore4eosc.eu/",
+        text: "FAIRCORE4EOSC",
+      },
+    ],
+  },
+];
+---
+
+<div class="bg-raidGray py-12">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-4">
+      <div class="col-span-1">
+        <h1 class="text-raidPrimary font-semibold text-2xl">New to RAiD?</h1>
+      </div>
+      <div class="col-span-3">
+        <div>
+          <ul class="list-disc text-sm">
+            {
+              listItems.map((item) => (
+                <li
+                  set:html={
+                    item.links
+                      ? item.links.reduce(
+                          (acc, link) =>
+                            acc.replace(
+                              link.text,
+                              `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
+                            ),
+                          item.text
+                        )
+                      : item.text
+                  }
+                />
+              ))
+            }
+          </ul>
+          <div class="mt-8">
+            <RaidButton
+              label="Learn more"
+              href="https://documentation.raid.org/raid/?l=en"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

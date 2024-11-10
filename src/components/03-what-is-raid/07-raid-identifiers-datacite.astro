@@ -1,0 +1,26 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const title = "RAiD identifiers utilise DataCite DOIs";
+const description =
+  "The ARDC and DataCite have entered an agreement to use DataCite DOIs as RAiD identifiers. Read more about this partnership from DataCite and the ARDC.";
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col gap-3 py-12">
+    <h1 class="text-black font-semibold text-2xl">
+      {title}
+    </h1>
+    <p>
+      {description}
+      The ARDC and DataCite have entered an agreement to use DataCite DOIs as RAiD
+      identifiers. Read more about this partnership from DataCite and RAiD.
+    </p>
+    <div class="grid grid-cols-3 gap-12">
+      <RaidButton
+        href="https://ardc.edu.au/article/ardc-and-datacite-announce-partnership-to-deliver-the-raid-service/"
+        label="Learn more"
+      />
+    </div>
+  </div>
+</div>

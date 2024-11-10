@@ -1,0 +1,25 @@
+---
+const title = "Why RAiD was developed";
+const descriptionBlocks = [
+  "Before RAiD, it was difficult to record or access information about a research project or activity.",
+  "With RAiD, project administrative tasks no longer need to be laborious, time-consuming or costly. RAiD reduces manual entry of data and ensures consistency when preparing:",
+];
+const listItems = [
+  "Research applications",
+  "Submissions",
+  "Funding requests",
+  "Subproject allocations",
+  "Project collaborations",
+  "Research reports",
+];
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col gap-3 py-12">
+    <h1 class="text-black font-semibold text-2xl">{title}</h1>
+    {descriptionBlocks.map((block) => <p>{block}</p>)}
+    <ul class="list-disc pl-12">
+      {listItems.map((item) => <li>{item}</li>)}
+    </ul>
+  </div>
+</div>

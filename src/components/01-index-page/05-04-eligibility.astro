@@ -1,0 +1,51 @@
+---
+const title = "Eligibility";
+
+const listItems = [
+  {
+    text: "RAiD supports <strong>research projects</strong>.",
+  },
+  {
+    text: "A research project is an endeavour or undertaking that aims to advance knowledge, with a set scope that takes place over a limited (if potentially long) period of time.",
+  },
+  {
+    text: "A project is not identical to a grant; a project is something you do, while a grant is something you receive. Identifiers for grants are available from Crossref or DataCite (and may constitute part of a RAiD record).",
+  },
+  {
+    text: "RAiDs should not be used for organisations (acquire an ROR instead) or durable organisational units like faculties, departments, or laboratories.",
+    links: [{ url: "https://ror.org/", text: "ROR" }],
+  },
+  {
+    text: "If you have any questions about the appropriateness of RAiD for your use case, please contact us.",
+    links: [
+      {
+        url: "mailto:contact@raid.org?subject=RAiD%20eligibility%20question&body=Dear%20RAiD%20team%2C%0A%0AI%20am%20unsure%20whether%20or%20not%20RAiD%20is%20appropriate%20for%20my%20use%20case.%0A%0A%5Bplease%20explain%20your%20use%20case%5D",
+        text: "contact us",
+      },
+    ],
+  },
+];
+---
+
+<h3 class="text-raidTextPrimary text-base">{title}</h3>
+
+<ul class="list-disc text-sm pl-12">
+  {
+    listItems.map((item) => (
+      <li
+        set:html={
+          item.links
+            ? item.links.reduce(
+                (acc, link) =>
+                  acc.replace(
+                    link.text,
+                    `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
+                  ),
+                item.text
+              )
+            : item.text
+        }
+      />
+    ))
+  }
+</ul>

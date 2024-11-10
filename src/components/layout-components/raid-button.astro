@@ -1,0 +1,11 @@
+---
+const { label, href } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  title={label}
+  class="w-full justify-center truncate cursor-pointer text-center rounded-md bg-raidPrimary px-8 py-1.5 text-sm font-base text-white shadow-sm hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-raidPrimary items-center"
+  >{label}</a
+>

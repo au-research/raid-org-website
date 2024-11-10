@@ -1,0 +1,23 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const title = "How RAiD works";
+const description =
+  "RAiD is a federated system. RAiDs are minted, and project metadata recorded, at separate RAiD Registration Agencies (RAs). These RAs then make this information available via a unified global portal at raid.org, which also provides a single web interface and API for search and resolution).";
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="flex flex-col gap-3 py-12">
+    <h1 class="text-black font-semibold text-2xl">{title}</h1>
+    <p>
+      {description}
+    </p>
+
+    <div class="grid grid-cols-3 gap-12">
+      <RaidButton
+        href="https://documentation.raid.org/raid/?l=en"
+        label="Learn more"
+      />
+    </div>
+  </div>
+</div>

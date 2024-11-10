@@ -1,0 +1,51 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const tiles = [
+  {
+    title: "What is RAiD?",
+    link: "/what-is-raid",
+    icon: "/images/icons/research-organisation-icon.png",
+  },
+  {
+    title: "How RAiD works",
+    link: "/what-is-raid",
+    icon: "/images/icons/logic-icon.png",
+  },
+  {
+    title: "RAiD System Setup",
+    link: "/what-is-raid",
+    icon: "/images/icons/development-icon.png",
+  },
+  {
+    title: "Why RAiD?",
+    link: "/what-is-raid",
+    icon: "/images/icons/cognitive-experience-icon.png",
+  },
+  {
+    title: "How RAiD works",
+    link: "/what-is-raid",
+    icon: "/images/icons/planification-icon.png",
+  },
+];
+---
+
+<div class="bg-gray-200">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 py-8">
+    <div
+      class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-3 sm:grid-cols-5 gap-6 min-h-96 place-items-cente"
+    >
+      {
+        tiles.map((el) => (
+          <div class="h-full w-full py-12">
+            <div class="bg-raidGray flex flex-col items-center justify-start text-center gap-2 h-full">
+              <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
+              <h2 class="text-lg text-raidTextPrimary">{el.title}</h2>
+              <RaidButton label="Learn more" href={el.link} />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

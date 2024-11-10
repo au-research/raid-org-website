@@ -1,0 +1,63 @@
+---
+const title = "Key issues that RAiD solves";
+
+const reasons = [
+  {
+    title: "Research data origination",
+    description:
+      "Not knowing where research data has originated from or what it is associated to",
+  },
+  {
+    title: "Monitoring project activities",
+    description:
+      "Keeping track of project activities for oversight and visibility, as funding, tasks and their contributors frequently change over time",
+  },
+  {
+    title: "Minimising errors",
+    description:
+      "Minimising errors in forgotten, lost, hard-to-fine or superseded project information by providing a single, reliable place of storage.",
+  },
+];
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+  <div class="grid grid-cols-2">
+    <div>
+      <h1 class="text-black font-semibold text-2xl">
+        {title}
+      </h1>
+    </div>
+    <div>
+      <div class="flex flex-col gap-5">
+        {
+          reasons.map((reason) => (
+            <details class="border-t border-gray-200 py-4 px-4 w-full">
+              <summary class="flex items-center cursor-pointer list-none">
+                <span class="text-lg font-medium text-gray-900 mr-auto">
+                  {reason.title}
+                </span>
+              </summary>
+              <div class="mt-4 text-gray-600">{reason.description}</div>
+            </details>
+          ))
+        }
+
+        <div class="mt-5">
+          <h1 class="text-black font-semibold text-xl">Want to know more?</h1>
+          <p>
+            Go to our <a
+              target="_blank"
+              class="text-raidTextPrimary"
+              href="https://documentation.raid.org/raid/?l=en"
+              >RAiD Documentation</a
+            > site and then <a
+              class="text-raidTextPrimary"
+              href="mailto:contact@raid.org"
+              >contact us with your RAiD questions</a
+            > .
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

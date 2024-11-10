@@ -1,0 +1,43 @@
+---
+import RaidButton from "@/components/layout-components/raid-button.astro";
+
+const heading = "Why get a RAiD?";
+const description =
+  "RAiD helps you, your team, and your organisation spend more time doing research and less time managing or administering it. RAiD also opens the research project ‘black box’ exposing key project information, and how it has changed over time, in the interest of transparency and open scholarship.";
+const buttons = [
+  {
+    title: "Read the ADRC's Terms and Conditions",
+    link: "https://ardc.edu.au/terms-and-conditions/",
+  },
+  {
+    title: "View the ARDC’s Accessibility Statement",
+    link: "https://ardc.edu.au/accessibility-statement-for-ardc/",
+  },
+  {
+    title: "Learn how the ARDC manages your private information",
+    link: "https://ardc.edu.au/privacy-policy/",
+  },
+];
+---
+
+<div class="bg-raidSecondary">
+  <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col py-12">
+    <div class="grid grid-cols-4">
+      <div class="col-span-1">
+        <h1 class="text-white text-3xl">{heading}</h1>
+      </div>
+      <div class="flex flex-col gap-2 col-span-3">
+        <p class="text-white text-sm">
+          {description}
+        </p>
+        <div class="flex gap-3">
+          {
+            buttons.map((button) => (
+              <RaidButton label={button.title} href={button.link} />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

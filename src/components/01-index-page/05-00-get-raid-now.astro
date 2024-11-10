@@ -1,0 +1,26 @@
+---
+import AustraliaNewZealand from "./05-01-australia-new-zeland.astro";
+import Europe from "./05-02-europe.astro";
+import Global from "./05-03-global.astro";
+import Eligibility from "./05-04-eligibility.astro";
+import Documentation from "./05-05-documentation.astro";
+---
+
+<div class="bg-gray-200 py-12">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-4">
+      <div class="col-span-1">
+        <h1 class="text-raidPrimary font-semibold text-2xl">Get RAiD now!</h1>
+      </div>
+      <div class="col-span-3 mt-12">
+        <div class="flex flex-col gap-5">
+          <AustraliaNewZealand />
+          <Europe />
+          <Global />
+          <Eligibility />
+          <Documentation />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

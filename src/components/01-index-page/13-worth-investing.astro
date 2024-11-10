@@ -1,0 +1,57 @@
+---
+const title = "Why RAiD is worth investing in";
+const description =
+  "The ARDC is currently receiving heightened international interest from research organisations keen to learn how they can adopt RAiD into their research activities, or become either a RAiD Registration Agency or a service point.";
+const reasons = [
+  {
+    title: "Global interest",
+    description:
+      "A high global interest in and support of RAiD is increasing across the global research community, including North America, Oceania, Europe and South America",
+  },
+  {
+    title: "PID for research projects and activities",
+    description:
+      "RAiD has been developed as a needed PID for research projects and activities, via a RAiD system that is underpinned by ISO 23527 and DOIs that are minted by DataCite.",
+  },
+  {
+    title: "Customised use of open RAiD metadata",
+    description:
+      "The customised use of open RAiD metadata is a game-changer, incl. the automatic compiling and submitting of multiple research applications, submissions and grants all at the same time",
+  },
+  {
+    title: "Intelligent analysis",
+    description:
+      "Intelligent analysis of RAiD metadata will indicate project outcomes and support strategic activities, such as planning, reporting, funding and developing new research hypotheses.",
+  },
+];
+---
+
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+  <div class="flex flex-col gap-5">
+    <h1 class="text-raidTextPrimary font-semibold text-2xl">
+      {title}
+    </h1>
+    <p>
+      {description}
+    </p>
+    <div class="grid grid-cols-2">
+      <div>
+        <h1 class="text-black font-semibold text-2xl">Worthwhile reasons</h1>
+      </div>
+      <div>
+        {
+          reasons.map((reason) => (
+            <details class="border-t border-gray-200 py-4 px-4 w-full">
+              <summary class="flex items-center cursor-pointer list-none">
+                <span class="text-lg font-medium text-gray-900 mr-auto">
+                  {reason.title}
+                </span>
+              </summary>
+              <div class="mt-4 text-gray-600">{reason.description}</div>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</div>
