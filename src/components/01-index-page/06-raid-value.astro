@@ -1,23 +1,27 @@
 ---
 import RaidButton from "@/components/layout-components/raid-button.astro";
 
+import researcherIcon from "@/images/icons/researcher-icon.png";
+import globalDataIcon from "@/images/icons/global-data-icon.png";
+import timeIcon from "@/images/icons/time-icon.png";
+
 const title = "RAiD's Value";
 const subtitle = "RAiD is a game-changer for the global research community";
 const tiles = [
   {
     description:
       "Projects and activities can now be uniquely identified and tracked across the research lifecycle",
-    icon: "/images/icons/researcher-icon.png",
+    icon: researcherIcon.src,
   },
   {
     description:
       "RAiD allows project information to be viewed, shared, managed, and linked to other PIDs globally",
-    icon: "/images/icons/global-data-icon.png",
+    icon: globalDataIcon.src,
   },
   {
     description:
       "RAiD can be integrated into existing software platforms to eliminate double-entry of information",
-    icon: "/images/icons/time-icon.png",
+    icon: timeIcon.src,
   },
 ];
 ---

@@ -1,27 +1,32 @@
 ---
+import planificationIcon from "@/images/icons/planification-icon.png";
+import nodesIcon from "@/images/icons/nodes-icon.png";
+import cognitiveExperience from "@/images/icons/cognitive-experience-icon.png";
+import backgroundLight from "@/images/backgrounds/background-light.jpg";
+
 const tiles = [
   {
     title: "Unambiguous identification",
     description:
       "Provide your research project with a unique persistent identifier tor discovery, reporting, and communication",
-    icon: "/images/icons/planification-icon.png",
+    icon: planificationIcon.src,
   },
   {
     title: "A global research project registry",
     description:
       "Combine all your research project information into standardised RAiD metadata records with multi-party access, a version history, and an automatically generated landing page",
-    icon: "/images/icons/nodes-icon.png",
+    icon: nodesIcon.src,
   },
   {
     title: "Reporting and assessment",
     description:
       "Track and report your project's resourcing, inputs, and outputs over time to gain strategic insight into your project’s outcomes or impact",
-    icon: "/images/icons/cognitive-experience-icon.png",
+    icon: cognitiveExperience.src,
   },
 ];
 ---
 
-<div style="background-image: url('/images/backgrounds/background-light.jpg');">
+<div style=`background-image: url(${backgroundLight.src});`>
   <div
     class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-3 gap-12 min-h-96 place-items-center"
   >

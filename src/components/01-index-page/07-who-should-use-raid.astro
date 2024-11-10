@@ -1,6 +1,12 @@
 ---
 import RaidButton from "@/components/layout-components/raid-button.astro";
 
+import researchIcon from "@/images/icons/research-icon.png";
+import fundingIcon from "@/images/icons/funding-icon.png";
+import organisationIcon from "@/images/icons/organisation-icon.png";
+import researchOrganisationIcon from "@/images/icons/research-organisation-icon.png";
+import researcherIcon from "@/images/icons/researcher-icon.png";
+
 const title = "Who should use RAiD?";
 
 const subtitle =
@@ -11,31 +17,31 @@ const tiles = [
     title: "Research infrastructure providers",
     description:
       "Organisations that provide research infrastructure or services such as imaging, HPC, or specialised softare for researchers (and want to track outcomes from this usage)",
-    icon: "/images/icons/research-icon.png",
+    icon: researchIcon.src,
   },
   {
     title: "Funders",
     description:
       "Organisations that fund research or research infrastructure (and want to track the outcomes and impact of this funding)",
-    icon: "/images/icons/funding-icon.png",
+    icon: fundingIcon.src,
   },
   {
     title: "Research organisations",
     description:
       "Organisations wishing to identify and track project inputs and outputs (e.g. contributors, collaborators, data sets, samples, instruments, tools, grants, events, grey literature, journal publications, and all associated PIDs)",
-    icon: "/images/icons/organisation-icon.png",
+    icon: organisationIcon.src,
   },
   {
     title: "Researchers",
     description:
       "Researchers and research teams wishing to track and share information about their projects",
-    icon: "/images/icons/research-organisation-icon.png",
+    icon: researchOrganisationIcon.src,
   },
   {
     title: "Other PID providers",
     description:
       "Other PID providers that want to integrate project PIDs or leverage proect matadata to help build research graphs",
-    icon: "/images/icons/researcher-icon.png",
+    icon: researcherIcon.src,
   },
 ];
 ---
