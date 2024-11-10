@@ -5,6 +5,7 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  base: "https://weidenhaus-ardc.github.io",
+  site: "https://weidenhaus-ardc.github.io",
+  base: "raid-org-website",
   integrations: [tailwind()],
 });
