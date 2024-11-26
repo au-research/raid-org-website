@@ -1,9 +1,12 @@
+import { fetchResults } from "@/services/search-service";
+
 const STYLES = {
   resultContainer: "border-b border-gray-200 py-4",
   title: "text-lg font-semibold",
   doiLink: "text-sm text-gray-600",
   description: "mt-2 text-gray-700",
   publicationInfo: "text-sm text-gray-500 mt-2",
+  creatorInfo: "text-sm text-gray-500 mt-2",
   loadingContainer: "flex justify-center items-center py-4",
   loadingSpinner:
     "animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600",
@@ -61,21 +64,6 @@ export function initializeSearch() {
 
     const searchFieldsQuery = searchFields.join(" OR ");
     return `((identifiers.identifier:*raid.org.au*) AND (${searchFieldsQuery}))`;
-  }
-
-  async function fetchResults(query: string): Promise<DOIData[]> {
-    const encodedQuery = encodeURIComponent(query);
-    const searchQuery = buildSearchQuery(encodedQuery);
-    const response = await fetch(
-      `https://api.test.datacite.org/dois?query=${searchQuery}`
-    );
-
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
-
-    const data = (await response.json()) as APIResponse;
-    return data.data;
   }
 
   function escapeHtml(unsafe: string): string {
@@ -150,7 +138,7 @@ export function initializeSearch() {
     const descriptionText = descriptions.map((el) => el.description).join("; ");
     return `
       <p class="${STYLES.description}">
-        ${highlightSearchTerm(descriptionText, searchTerm)}
+        Description: ${highlightSearchTerm(descriptionText, searchTerm)}
       </p>
     `;
   }
@@ -163,6 +151,15 @@ export function initializeSearch() {
       `;
   }
 
+  function createCreatorInfo({ creators }: { creators: DOICreator[] }): string {
+    const creatorText = creators.map((el) => el.name).join("; ");
+    return `
+        <a class="${STYLES.creatorInfo}">
+          ${creatorText ? `Created by ${escapeHtml(creatorText)}` : "Unknown creator"}
+        </a>
+      `;
+  }
+
   function createResultHTML(item: DOIData, searchTerm: string): string {
     const { attributes } = item;
 
@@ -171,6 +168,9 @@ export function initializeSearch() {
       createDoiLink(attributes.doi),
       createDescriptionSection(searchTerm, attributes.descriptions),
       createPublicationInfo(attributes.publisher, attributes.publicationYear),
+      createCreatorInfo({
+        creators: attributes.creators,
+      }),
     ].join("\n");
 
     return withContainer(sections, STYLES.resultContainer);
@@ -216,7 +216,10 @@ export function initializeSearch() {
     renderLoading();
 
     try {
-      const results = await fetchResults(searchQuery);
+      const encodedQuery = encodeURIComponent(searchQuery);
+      const searchQuery02 = buildSearchQuery(encodedQuery);
+      const results = await fetchResults(searchQuery02);
+
       updateState({ isLoading: false, results, error: null });
       renderResults();
     } catch (error) {
@@ -231,9 +234,10 @@ export function initializeSearch() {
   }
 
   function handleKeyboardShortcut(e: KeyboardEvent): void {
+    const baseUrl = import.meta.env.BASE_URL ? import.meta.env.BASE_URL : "";
     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
       e.preventDefault();
-      window.location.href = "/raid-org-website/search";
+      window.location.href = `${baseUrl}/search`;
     }
   }
 
