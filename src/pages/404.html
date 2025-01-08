@@ -1,0 +1,102 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Route Handler</title>
+  </head>
+  <body>
+    <script>
+      const FALLBACK_URL = "https://raid.org";
+
+      function extractHandle(url) {
+        const regex = /\d+\.\d+(?:\.\d+)?\/[a-zA-Z0-9]+/;
+        const match = url.match(regex);
+        return match ? match[0] : null;
+      }
+
+      function extractAlternateIdentifier(dataciteData) {
+        const alternateIdentifier =
+          dataciteData.data.attributes.alternateIdentifiers.find(
+            (el) => el.alternateIdentifierType === "RaidAgencyUrl"
+          );
+        return alternateIdentifier
+          ? alternateIdentifier.alternateIdentifier
+          : null;
+      }
+
+      async function fetchDataciteData(handle) {
+        const prodApiUrl = `https://api.datacite.org/dois/${handle}`;
+        let response = await fetch(prodApiUrl);
+        if (response.status === 404) {
+          const testApiUrl = `https://api.test.datacite.org/dois/${handle}`;
+          response = await fetch(testApiUrl);
+        }
+        if (!response.ok) {
+          return null;
+        }
+        return await response.json();
+      }
+
+      async function getRedirectUrl(handle) {
+        try {
+          const dataciteData = await fetchDataciteData(handle);
+          if (!dataciteData) {
+            console.error("Data not found");
+            return FALLBACK_URL;
+          }
+          let alternateIdentifier = extractAlternateIdentifier(dataciteData);
+          if (!alternateIdentifier) {
+            console.error("Alternate Identifier not found");
+            return FALLBACK_URL;
+          }
+          if (
+            alternateIdentifier &&
+            alternateIdentifier.startsWith(FALLBACK_URL) &&
+            alternateIdentifier.endsWith(`${handle}`)
+          ) {
+            return `https://static.prod.raid.org.au/raids/${handle}`;
+          }
+          alternateIdentifier = alternateIdentifier.replace(
+            "prod.static",
+            "static.prod"
+          );
+          alternateIdentifier = alternateIdentifier.replace(
+            "test.static",
+            "static.test"
+          );
+          alternateIdentifier = alternateIdentifier.replace(
+            extractHandle(alternateIdentifier) || "",
+            `raids/${extractHandle(alternateIdentifier)}`
+          );
+          return alternateIdentifier;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+        return FALLBACK_URL;
+      }
+
+      // Wrap the path handling in an async function
+      async function handlePath() {
+        const pathSegments = window.location.pathname
+          .split("/")
+          .filter(Boolean);
+        if (pathSegments.length >= 2) {
+          const prefix = pathSegments[1];
+          const suffix = pathSegments[2];
+          const redirectUrl = await getRedirectUrl(`${prefix}/${suffix}`);
+
+          const urlRegex = new RegExp(
+            /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+          );
+          if (urlRegex.test(redirectUrl)) {
+            window.location.href = redirectUrl;
+          } else {
+            window.location.href = FALLBACK_URL;
+          }
+        }
+      }
+
+      // Call the async function
+      handlePath();
+    </script>
+  </body>
+</html>

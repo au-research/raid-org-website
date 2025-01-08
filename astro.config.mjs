@@ -9,4 +9,8 @@ export default defineConfig({
   site: "https://weidenhaus-ardc.github.io",
   base: "/raid-org-website",
   integrations: [tailwind()],
+  output: "static",
+  build: {
+    format: "file", // This ensures 404.html is generated
+  },
 });

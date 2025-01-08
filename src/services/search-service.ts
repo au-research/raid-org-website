@@ -1,6 +1,6 @@
 export async function fetchResults(searchQuery: string): Promise<DOIData[]> {
-  // const endpoint = `https://api.test.datacite.org/dois?query=${searchQuery}`;
-  const endpoint = `http://localhost:8080/search-results`;
+  const endpoint = `https://api.datacite.org/dois?query=${searchQuery}`;
+  // const endpoint = `http://localhost:8080/search-results`;
   const response = await fetch(endpoint);
 
   if (!response.ok) {

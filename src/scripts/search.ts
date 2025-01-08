@@ -3,7 +3,8 @@ import { fetchResults } from "@/services/search-service";
 const STYLES = {
   resultContainer: "border-b border-gray-200 py-4",
   title: "text-lg font-semibold",
-  doiLink: "text-sm text-gray-600",
+  doiLink:
+    "rounded bg-[#368bcc] px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-[#4a96d1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#368bcc]",
   description: "mt-2 text-gray-700",
   publicationInfo: "text-sm text-gray-500 mt-2",
   creatorInfo: "text-sm text-gray-500 mt-2",
@@ -15,6 +16,7 @@ const STYLES = {
 } as const;
 
 export function initializeSearch() {
+  console.log("initializeSearch triggered...!");
   const searchForm = document.getElementById("searchForm") as HTMLFormElement;
   const searchInput = document.getElementById("search") as HTMLInputElement;
   const searchTitle = document.getElementById(
@@ -165,12 +167,12 @@ export function initializeSearch() {
 
     const sections = [
       createTitleSection(attributes.titles, searchTerm),
-      createDoiLink(attributes.doi),
       createDescriptionSection(searchTerm, attributes.descriptions),
       createPublicationInfo(attributes.publisher, attributes.publicationYear),
       createCreatorInfo({
         creators: attributes.creators,
       }),
+      `<br/>${createDoiLink(attributes.doi)}`,
     ].join("\n");
 
     return withContainer(sections, STYLES.resultContainer);

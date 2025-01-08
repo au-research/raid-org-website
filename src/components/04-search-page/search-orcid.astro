@@ -39,10 +39,11 @@ const searchQuery = Astro.url.searchParams.get("q") || "";
   import { fetchPersonData } from "@/services/search-service";
 
   document.addEventListener("DOMContentLoaded", async () => {
-    // const personData: any = await fetchPersonData({
-    //   orcidLink: "https://orcid.org/0000-0002-6492-9025",
-    // });
-    // console.log("personData", personData);
+    console.log("DOMContentLoaded");
+    const personData: any = await fetchPersonData({
+      orcidLink: "https://orcid.org/0000-0002-6492-9025",
+    });
+    console.log("personData", personData);
 
     // Get the query parameter value
     const urlParams = new URLSearchParams(window.location.search);
