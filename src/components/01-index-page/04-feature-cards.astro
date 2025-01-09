@@ -26,13 +26,13 @@ const tiles = [
 ];
 ---
 
-<div style=`background-image: url(${backgroundLight.src});`>
+<div style=`background-image: url(${backgroundLight.src});` class="p-6">
   <div
-    class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-3 gap-12 min-h-96 place-items-center"
+    class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 lg:gap-12 min-h-96 place-items-center"
   >
     {
       tiles.map((el) => (
-        <div class="h-full w-full py-12">
+        <div class="h-full w-full">
           <div class="bg-raidGray p-4 rounded shadow flex flex-col items-center justify-center text-center gap-2 h-full">
             <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
             <h2 class="text-xl">{el.title}</h2>
