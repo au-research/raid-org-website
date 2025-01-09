@@ -27,25 +27,40 @@ const links = [
 ---
 
 <header
-  class="inset-x-0 top-0 z-50 flex h-32 shadow bg-raidPrimary text-white items-center"
+  class="inset-x-0 top-0 z-50 flex h-auto min-h-[4rem] md:h-32 shadow bg-raidPrimary text-white items-center"
 >
-  <div class="mx-auto w-full items-center px-4 sm:px-6 lg:px-8 gap-6">
-    <div class="grid grid-cols-3 align-middle items-center">
-      <a href="/raid-org-website/">
-        <div class="flex flex-1 items-center gap-x-6">
-          <img src={raidLogoDark.src} class="h-10 sm:h-20 w-auto" alt="" />
+  <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 py-4 items-center"
+    >
+      <!-- Logo -->
+      <a
+        href="/raid-org-website/"
+        class="justify-self-center md:justify-self-start"
+      >
+        <div class="flex items-center">
+          <img
+            src={raidLogoDark.src}
+            class="h-8 sm:h-12 md:h-20 w-auto"
+            alt="RAID Logo"
+          />
         </div>
       </a>
-      <div class="items-center">
+
+      <!-- Search Bar -->
+      <div class="order-3 md:order-2 w-full">
         {!isSearchPage && <SearchBar placeholder="Search..." />}
       </div>
 
-      <nav class="flex gap-x-11 text-sm font-semibold justify-end">
+      <!-- Navigation -->
+      <nav
+        class="order-2 md:order-3 flex flex-wrap justify-center md:justify-end gap-4 md:gap-x-11 text-sm font-semibold"
+      >
         {
           links.map((link) => (
             <a
               href={link.href}
-              class="text-white hover:text-gray-200 cursor-pointer font-extralight"
+              class="text-white hover:text-gray-200 cursor-pointer font-extralight whitespace-nowrap"
             >
               {link.text}
             </a>

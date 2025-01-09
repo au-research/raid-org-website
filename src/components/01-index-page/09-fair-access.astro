@@ -24,7 +24,7 @@ const listItems = [
 
 <div class="bg-white py-12">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid sm:grid-cols-2 grid-cols-1 gap-3">
       <div class="flex flex-col gap-3">
         <h1 class="font-semibold text-2xl">
           {title}
@@ -59,7 +59,7 @@ const listItems = [
           }
         </ul>
       </div>
-      <div>
+      <div class="sm:block hidden">
         <img src={backgroundHex.src} alt="" />
       </div>
     </div>

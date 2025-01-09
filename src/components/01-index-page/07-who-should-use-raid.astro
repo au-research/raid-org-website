@@ -54,11 +54,11 @@ const tiles = [
     </div>
 
     <div
-      class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-3 sm:grid-cols-5 gap-6 min-h-96 place-items-cente"
+      class="mx-auto max-w-7xl sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-5 gap-6 min-h-96 place-items-cente"
     >
       {
         tiles.map((el) => (
-          <div class="h-full w-full py-12">
+          <div class="h-full w-full sm:py-12 py-2">
             <div class="bg-raidGray flex flex-col items-center justify-start text-center gap-2 h-full">
               <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
               <h2 class="text-lg text-raidTextPrimary">{el.title}</h2>
