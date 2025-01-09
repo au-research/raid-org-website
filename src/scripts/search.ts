@@ -15,7 +15,7 @@ const STYLES = {
   noResults: "text-gray-600",
 } as const;
 
-export function initializeSearch() {
+export function initializeSearch(initialQuery?: string | null) {
   console.log("initializeSearch triggered...!");
   const searchForm = document.getElementById("searchForm") as HTMLFormElement;
   const searchInput = document.getElementById("search") as HTMLInputElement;
@@ -51,7 +51,6 @@ export function initializeSearch() {
     const searchFields = [];
 
     if (searchTitle.checked) {
-      //   searchFields.push(`(titles.title:*${query}*)`);
       searchFields.push(`(titles.title:"${query}")`);
     }
 
@@ -60,7 +59,6 @@ export function initializeSearch() {
     }
 
     if (searchFields.length === 0) {
-      //   searchFields.push(`(titles.title:*${query}*)`);
       searchFields.push(`(titles.title:${query})`);
     }
 
@@ -83,14 +81,11 @@ export function initializeSearch() {
   function highlightSearchTerm(text: string, searchTerm: string): string {
     if (!searchTerm) return escapeHtml(text);
 
-    // Escape both the text and search term for safety
     const escapedText = escapeHtml(text);
     const escapedSearchTerm = escapeHtml(searchTerm);
 
-    // Create a regular expression that matches the search term case-insensitively
     const regex = new RegExp(`(${escapedSearchTerm})`, "gi");
 
-    // Replace matches with highlighted version
     return escapedText.replace(
       regex,
       '<mark class="bg-yellow-200 rounded px-1">$1</mark>'
@@ -208,8 +203,10 @@ export function initializeSearch() {
     );
   }
 
-  async function handleSearch(event: Event): Promise<void> {
-    event.preventDefault();
+  async function handleSearch(event?: Event): Promise<void> {
+    if (event) {
+      event.preventDefault();
+    }
 
     const searchQuery = searchInput.value.trim();
     if (!searchQuery) return;
@@ -246,4 +243,9 @@ export function initializeSearch() {
   // Event listeners
   searchForm.addEventListener("submit", handleSearch);
   document.addEventListener("keydown", handleKeyboardShortcut);
+
+  // If there's an initial query, trigger the search
+  if (initialQuery) {
+    handleSearch();
+  }
 }

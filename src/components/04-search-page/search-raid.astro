@@ -58,12 +58,6 @@ const searchQuery = Astro.url.searchParams.get("q") || "";
   import { initializeSearch } from "@/scripts/search";
 
   document.addEventListener("DOMContentLoaded", async () => {
-    // const personData: any = await fetchPersonData({
-    //   orcidLink: "https://orcid.org/0000-0002-6492-9025",
-    // });
-    // console.log("personData", personData);
-
-    // Get the query parameter value
     const urlParams = new URLSearchParams(window.location.search);
     const queryParam = urlParams.get("q");
 
@@ -73,20 +67,7 @@ const searchQuery = Astro.url.searchParams.get("q") || "";
       searchInput.value = queryParam;
     }
 
-    // Initialize search and trigger if we have a query
-    initializeSearch();
-
-    if (queryParam) {
-      const searchForm = document.getElementById(
-        "searchForm"
-      ) as HTMLFormElement;
-      if (searchForm) {
-        setTimeout(() => {
-          searchForm.dispatchEvent(new Event("submit"));
-          // form reset
-          searchInput.value = "";
-        }, 0);
-      }
-    }
+    // Pass the initial query parameter to initializeSearch
+    initializeSearch(queryParam);
   });
 </script>
