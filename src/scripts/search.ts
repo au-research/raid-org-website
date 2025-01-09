@@ -119,7 +119,7 @@ export function initializeSearch(initialQuery?: string | null) {
           href="https://raid.org/${escapeHtml(doi)}" 
           class="${STYLES.doiLink}"
         >
-          DOI: ${escapeHtml(doi)}
+          RAiD: ${escapeHtml(doi)}
         </a>
       `;
   }
