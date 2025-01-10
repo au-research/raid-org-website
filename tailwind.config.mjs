@@ -8,6 +8,8 @@ export default {
         raidSecondary: "#87b5cf",
         raidGray: "#e7e6ea",
         raidTextPrimary: "#4b86b1",
+        raidTextPrimaryDark: "#43789f",
+        raidTextPrimaryDarker: "#3c6b8d",
       },
     },
   },

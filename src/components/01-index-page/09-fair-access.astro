@@ -1,25 +1,5 @@
 ---
 import backgroundHex from "@/images/backgrounds/background-hex.jpg";
-
-const title = `FAIR, equitable and sustainable access`;
-const introText = `RAiD incorporates and facilitates FAIR (<strong>F</strong>indable, <strong>A</strong>ccessible, <strong>I</strong>nteroperable and <strong>R</strong>euseable) data principles`;
-const introTextLink = `https://www.go-fair.org/fair-principles/`;
-const introTextLinkText = `FAIR`;
-
-const listItems = [
-  {
-    text: "RAiD is open-source and aligned with the Principles of Open Scholarly Infrastructure (POSI)",
-    links: [
-      {
-        url: "https://openscholarlyinfrastructure.org/",
-        text: "Principles of Open Scholarly Infrastructure",
-      },
-    ],
-  },
-  {
-    text: `Provides a globally available project registry with human- and machine-readable project metadata, contributing to the documentation of data and other research outpus.`,
-  },
-];
 ---
 
 <div class="bg-white py-12">
@@ -27,37 +7,31 @@ const listItems = [
     <div class="grid sm:grid-cols-2 grid-cols-1 gap-3">
       <div class="flex flex-col gap-3">
         <h1 class="font-semibold text-2xl">
-          {title}
+          FAIR, equitable and sustainable access
         </h1>
         <p class="text-sm">
-          <li
-            set:html={introText.replace(
-              introTextLinkText,
-              `<a class="text-raidTextPrimary" href="${introTextLink}">${introTextLinkText}<a>`
-            )}
-          />
+          RAiD incorporates and facilitates FAIR (<strong>F</strong>indable, <strong
+            >A</strong
+          >ccessible, <strong>I</strong>nteroperable and <strong>R</strong
+          >euseable) data principles
+          <a
+            class="text-raidTextPrimaryDark"
+            href="https://www.go-fair.org/fair-principles/">FAIR</a
+          >
         </p>
-
-        <ul class="list-disc text-sm pl-12">
-          {
-            listItems.map((item) => (
-              <li
-                set:html={
-                  item.links
-                    ? item.links.reduce(
-                        (acc, link) =>
-                          acc.replace(
-                            link.text,
-                            `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
-                          ),
-                        item.text
-                      )
-                    : item.text
-                }
-              />
-            ))
-          }
-        </ul>
+        <p class="text-sm">
+          RAiD is open-source and aligned with the <a
+            target="_blank"
+            class="text-raidTextPrimaryDark"
+            href="https://openscholarlyinfrastructure.org/"
+            >Principles of Open Scholarly Infrastructure</a
+          > (POSI)
+        </p>
+        <p class="text-sm">
+          Provides a globally available project registry with human- and
+          machine-readable project metadata, contributing to the documentation
+          of data and other research outpus.
+        </p>
       </div>
       <div class="sm:block hidden">
         <img src={backgroundHex.src} alt="" />

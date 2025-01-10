@@ -1,11 +1,19 @@
 ---
 const { label, href } = Astro.props;
+
+// Ensure the href is valid to avoid empty or malformed links
+if (!href) {
+  throw new Error("href is required for links");
+}
 ---
 
 <a
   href={href}
   target="_blank"
+  rel="noopener noreferrer"
   title={label}
-  class="w-full justify-center truncate cursor-pointer text-center rounded-md bg-raidPrimary px-8 py-1.5 text-sm font-base text-white shadow-sm hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-raidPrimary items-center"
-  >{label}</a
+  class="w-full justify-center truncate cursor-pointer text-center rounded-md bg-raidTextPrimaryDark px-8 py-1.5 text-sm font-base text-white shadow-sm hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-raidPrimary items-center"
+  aria-label={label}
 >
+  {label}
+</a>

@@ -47,7 +47,7 @@ const tiles = [
             <div class="bg-raidGray flex flex-col items-center justify-start text-center gap-2 h-full">
               <img src={el.icon} class="w-36 h-36 rounded-full" alt="" />
               <h2 class="text-lg text-raidTextPrimary">{el.title}</h2>
-              <RaidButton label="Learn more" href={el.link} />
+              <RaidButton label={`${el.title}`} href={el.link} />
             </div>
           </div>
         ))

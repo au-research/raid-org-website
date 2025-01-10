@@ -28,7 +28,7 @@ const listItems = [
 ];
 ---
 
-<h3 class="text-raidTextPrimary text-base">{title}</h3>
+<h2 class="text-raidTextPrimaryDarker text-base">{title}</h2>
 
 <ul class="list-disc text-sm pl-12">
   {
@@ -40,7 +40,7 @@ const listItems = [
                 (acc, link) =>
                   acc.replace(
                     link.text,
-                    `<a target="_blank" class="text-raidTextPrimary" href="${link.url}">${link.text}</a>`
+                    `<a target="_blank" class="text-raidTextPrimaryDarker" href="${link.url}">${link.text}</a>`
                   ),
                 item.text
               )
