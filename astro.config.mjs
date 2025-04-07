@@ -1,13 +1,16 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import { loadEnv } from "vite";
+
+const { BASE_SLUG } = loadEnv(process.env.BASE_SLUG || "", process.cwd(), "");
+const { BASE_SITE } = loadEnv(process.env.BASE_SITE || "", process.cwd(), "");
 
 import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  // site: "https://weidenhaus-ardc.github.io/raid-org-website/",
-  site: "https://weidenhaus-ardc.github.io",
-  base: "/raid-org-website",
+  site: BASE_SITE,
+  base: BASE_SLUG,
   integrations: [tailwind()],
   output: "static",
   build: {

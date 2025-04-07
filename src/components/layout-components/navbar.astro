@@ -1,10 +1,9 @@
 ---
 import raidLogoDark from "@/images/logos/raid-logo-dark.svg";
-import SearchBar from "@/components/SearchBar.astro";
 
 const baseUrl = import.meta.env.BASE_URL ? import.meta.env.BASE_URL : "";
-const currentPath = Astro.url.pathname;
-const isSearchPage = currentPath === `${baseUrl}/search`;
+const searchPageUrls = import.meta.env.RAID_SEARCH_PAGE || "";
+const baseSlug = import.meta.env.BASE_SLUG ? import.meta.env.BASE_SLUG : "";
 
 const links = [
   {
@@ -20,7 +19,7 @@ const links = [
     text: "Contact",
   },
   {
-    href: `${baseUrl}/search`,
+    href: `${searchPageUrls}`,
     text: "Search",
   },
 ];
@@ -31,13 +30,9 @@ const links = [
 >
   <div class="mx-auto w-full px-4 sm:px-6 lg:px-8">
     <div
-      class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 py-4 items-center"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 py-4 items-center"
     >
-      <!-- Logo -->
-      <a
-        href="/raid-org-website/"
-        class="justify-self-center md:justify-self-start"
-      >
+      <a href=`/${baseSlug}/` class="justify-self-center md:justify-self-start">
         <div class="flex items-center">
           <img
             src={raidLogoDark.src}
@@ -46,13 +41,6 @@ const links = [
           />
         </div>
       </a>
-
-      <!-- Search Bar -->
-      <div class="order-3 md:order-2 w-full">
-        {!isSearchPage && <SearchBar placeholder="Search..." />}
-      </div>
-
-      <!-- Navigation -->
       <nav
         class="order-2 md:order-3 flex flex-wrap justify-center md:justify-end gap-4 md:gap-x-11 text-sm font-semibold"
       >

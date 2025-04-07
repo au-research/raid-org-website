@@ -1,102 +1,57 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Route Handler</title>
+    <title>404</title>
   </head>
   <body>
     <script>
       const FALLBACK_URL = "https://raid.org";
 
       function extractHandle(url) {
-        const regex = /\d+\.\d+(?:\.\d+)?\/[a-zA-Z0-9]+/;
-        const match = url.match(regex);
-        return match ? match[0] : null;
+        return url.match(/\d+\.\d+(?:\.\d+)?\/[a-zA-Z0-9]+/)?.[0] ?? null;
       }
 
-      function extractAlternateIdentifier(dataciteData) {
-        const alternateIdentifier =
-          dataciteData.data.attributes.alternateIdentifiers.find(
-            (el) => el.alternateIdentifierType === "RaidAgencyUrl"
-          );
-        return alternateIdentifier
-          ? alternateIdentifier.alternateIdentifier
-          : null;
-      }
-
-      async function fetchDataciteData(handle) {
-        const prodApiUrl = `https://api.datacite.org/dois/${handle}`;
-        let response = await fetch(prodApiUrl);
-        if (response.status === 404) {
-          const testApiUrl = `https://api.test.datacite.org/dois/${handle}`;
-          response = await fetch(testApiUrl);
-        }
-        if (!response.ok) {
-          return null;
-        }
-        return await response.json();
-      }
-
-      async function getRedirectUrl(handle) {
+      async function getEnvironmentForHandle(handle) {
         try {
-          const dataciteData = await fetchDataciteData(handle);
-          if (!dataciteData) {
-            console.error("Data not found");
-            return FALLBACK_URL;
-          }
-          let alternateIdentifier = extractAlternateIdentifier(dataciteData);
-          if (!alternateIdentifier) {
-            console.error("Alternate Identifier not found");
-            return FALLBACK_URL;
-          }
-          if (
-            alternateIdentifier &&
-            alternateIdentifier.startsWith(FALLBACK_URL) &&
-            alternateIdentifier.endsWith(`${handle}`)
-          ) {
-            return `https://static.prod.raid.org.au/raids/${handle}`;
-          }
-          alternateIdentifier = alternateIdentifier.replace(
-            "prod.static",
-            "static.prod"
+          const response = await fetch(
+            "https://static.prod.raid.org.au/api/all-handles.json"
           );
-          alternateIdentifier = alternateIdentifier.replace(
-            "test.static",
-            "static.test"
-          );
-          alternateIdentifier = alternateIdentifier.replace(
-            extractHandle(alternateIdentifier) || "",
-            `raids/${extractHandle(alternateIdentifier)}`
-          );
-          return alternateIdentifier;
+          const handles = await response.json();
+          const handlesMap = new Map(handles);
+          return handlesMap.get(handle) ?? "";
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error(`Failed to check`, error);
         }
-        return FALLBACK_URL;
+        return "";
       }
 
-      // Wrap the path handling in an async function
-      async function handlePath() {
-        const pathSegments = window.location.pathname
-          .split("/")
-          .filter(Boolean);
-        if (pathSegments.length >= 2) {
-          const prefix = pathSegments[1];
-          const suffix = pathSegments[2];
-          const redirectUrl = await getRedirectUrl(`${prefix}/${suffix}`);
+      async function getRedirectUrl(path, json = false) {
+        const handle = extractHandle(path);
+        if (!handle) return FALLBACK_URL;
 
-          const urlRegex = new RegExp(
-            /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
+        try {
+          const env = await getEnvironmentForHandle(handle);
+          if (!env) return FALLBACK_URL;
+          const baseUrl = `https://static.${env}.raid.org.au/raids/${handle}`;
+          return json ? `${baseUrl}.json` : baseUrl;
+        } catch (error) {
+          console.error("Failed to get redirect URL:", error);
+          alert(
+            "This RAiD is pending publication and should be available withing 24 hours"
           );
-          if (urlRegex.test(redirectUrl)) {
-            window.location.href = redirectUrl;
-          } else {
-            window.location.href = FALLBACK_URL;
-          }
+          return FALLBACK_URL;
         }
       }
 
-      // Call the async function
-      handlePath();
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (window.location.href.toLowerCase().includes("squarespace")) return;
+        const wantJson = window.location.pathname.endsWith(".json");
+        const redirectUrl = await getRedirectUrl(
+          window.location.pathname,
+          wantJson
+        );
+        window.location.href = redirectUrl;
+      });
     </script>
   </body>
 </html>

@@ -7,30 +7,32 @@ import developmentIcon from "@/images/icons/development-icon.png";
 import cognitiveExperienceIcon from "@/images/icons/cognitive-experience-icon.png";
 import planificationIcon from "@/images/icons/planification-icon.png";
 
+const baseSlug = import.meta.env.BASE_SLUG ? import.meta.env.BASE_SLUG : "";
+
 const tiles = [
   {
     title: "What is RAiD?",
-    link: "/raid-org-website/what-is-raid",
+    link: `/${baseSlug}/what-is-raid`,
     icon: researchOrganisationIcon.src,
   },
   {
     title: "How RAiD works",
-    link: "/raid-org-website/what-is-raid",
+    link: `/${baseSlug}/what-is-raid`,
     icon: logicIcon.src,
   },
   {
     title: "RAiD System Setup",
-    link: "/raid-org-website/what-is-raid",
+    link: `/${baseSlug}/what-is-raid`,
     icon: developmentIcon.src,
   },
   {
     title: "Why RAiD?",
-    link: "/raid-org-website/what-is-raid",
+    link: `/${baseSlug}/what-is-raid`,
     icon: cognitiveExperienceIcon.src,
   },
   {
     title: "How RAiD works",
-    link: "/raid-org-website/what-is-raid",
+    link: `/${baseSlug}/what-is-raid`,
     icon: planificationIcon.src,
   },
 ];
