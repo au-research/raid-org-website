@@ -27,15 +27,14 @@ concurrency:
 env:
   BUILD_PATH: "." # default value when not using subfolders
   # BUILD_PATH: subfolder
+  BASE_SLUG: ${{ vars.BASE_SLUG }}
+  BASE_SITE: ${{ vars.BASE_SITE }}
+  RAID_SEARCH_PAGE: ${{ vars.RAID_SEARCH_PAGE }}
 
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    env:
-      BASE_SLUG: ${{ env.BASE_SLUG }}
-      BASE_SITE: ${{ env.BASE_SITE }}
-      RAID_SEARCH_PAGE: ${{ env.RAID_SEARCH_PAGE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
