@@ -34,6 +34,16 @@ Components are organized by page in numbered directories under `src/components/`
 
 Static assets like images are placed in the `src/images/` directory.
 
+## 🔎 RAiD Search
+
+- [https://raid.org/search](https://raid.org/search)
+
+## 🔀 RAiD Resolver
+
+- [https://raid.org/{prefix}/{suffix}](https://raid.org/{prefix}/{suffix})
+- Example:
+  - [https://raid.org/102.100.100/601891](https://raid.org/102.100.100/601891) ➡️ [https://static.prod.raid.org.au/raids/102.100.100/601891/](https://static.prod.raid.org.au/raids/102.100.100/601891)
+
 ## 📝 Editing Content
 
 To edit content on the site:
@@ -54,6 +64,7 @@ This site uses Tailwind CSS for styling:
 - For responsive design, use Tailwind's built-in breakpoint prefixes: `sm:`, `md:`, `lg:`, `xl:`, etc.
 
 To learn more about Tailwind:
+
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 - [Tailwind CSS Cheat Sheet](https://tailwindcomponents.com/cheatsheet/)
 - [Tailwind + Astro Integration Guide](https://docs.astro.build/en/guides/integrations-guide/tailwind/)
@@ -74,3 +85,9 @@ All commands are run from the root of the project, from a terminal:
 ## Astro documentation
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## 🎛️ Lighthouse Score
+
+Perfect lighthouse score
+
+![lighthouse score](./.github/images/lighthouse.webp "Lighthouse score")
