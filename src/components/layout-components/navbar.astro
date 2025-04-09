@@ -1,9 +1,6 @@
 ---
 import raidLogoDark from "@/images/logos/raid-logo-dark.svg";
 
-const baseUrl = import.meta.env.BASE_URL
-  ? import.meta.env.BASE_URL
-  : "https://raid.org";
 const searchPageUrl =
   import.meta.env.RAID_SEARCH_PAGE || "https://raid.org/search";
 const baseSlug = import.meta.env.BASE_SLUG ? import.meta.env.BASE_SLUG : "";
@@ -35,7 +32,10 @@ const links = [
     <div
       class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 py-4 items-center"
     >
-      <a href=`/${baseSlug}/` class="justify-self-center md:justify-self-start">
+      <a
+        href=`https://raid.org`
+        class="justify-self-center md:justify-self-start"
+      >
         <div class="flex items-center">
           <img
             src={raidLogoDark.src}
