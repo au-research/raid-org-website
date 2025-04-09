@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import ardcLogo from "@/images/logos/ardc-logo.webp";
 import ncrisLogo from "@/images/logos/ncris-logo.webp";
 ---
@@ -14,10 +15,22 @@ import ncrisLogo from "@/images/logos/ncris-logo.webp";
         </p>
         <div class="flex gap-12 items-center">
           <div>
-            <img src={ardcLogo.src} alt="ardc-logo" class="w-24" />
+            <Image
+              src={ardcLogo}
+              alt="ardc-logo"
+              width={96}
+              height={96}
+              class="w-24"
+            />
           </div>
           <div>
-            <img src={ncrisLogo.src} alt="ncris-logo" class="w-24" />
+            <Image
+              src={ncrisLogo}
+              alt="ncris-logo"
+              width={96}
+              height={96}
+              class="w-24"
+            />
           </div>
         </div>
         <p class="text-xs">
