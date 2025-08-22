@@ -18,7 +18,14 @@
           );
           const handles = await response.json();
           const handlesMap = new Map(handles);
-          return handlesMap.get(handle) ?? "";
+          const updatedMap = new Map();
+          handlesMap.forEach((value, key) => {
+            key = key.match(/(\d+\.\d+(?:\.\d+)?\/[a-zA-Z0-9]+)/)?.[0];
+            if (key) {
+              updatedMap.set(key, value);
+            }
+          });
+          return updatedMap.get(handle) ?? "";
         } catch (error) {
           console.error(`Failed to check`, error);
         }
