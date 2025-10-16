@@ -1,0 +1,94 @@
+---
+import Layout from "@/layouts/main.astro";
+import backgroundLaptop from "@/images/backgrounds/background-laptop.webp";
+
+const title =
+  "If you believe this to be in error, please email ";
+---
+<Layout title="main">
+    <style>
+        .error-code {
+            font-size: 120px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+            text-align: center;
+        }
+        .email:hover {
+            text-decoration: underline;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .error-code {
+                font-size: 80px;
+            }
+            .title {
+                font-size: 32px;
+            }
+            .subtitle {
+                font-size: 16px;
+            }
+        }
+    </style>
+
+<div
+  class="bg-cover bg-center min-h-[610px] sm:min-h-[610px] relative bg-transparent sm:bg-raid"
+  style={`background-image: url(${backgroundLaptop.src});`}
+>
+  <div class="absolute inset-0 bg-white/70 sm:hidden"></div>
+  <div class="absolute top-16 w-full">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 w-full">
+        <div class="p-6 mb-8 sm:mb-12">
+            <div class="icon">🔍</div>
+            <h2 class="title">RAiD not found</h2>
+            <h1 class="text-raidPrimary font-light text-2xl text-center sm:text-3xl">
+                {title} <a class="email" href="mailto:contact@raid.org" target="_blank">contact@raid.org</a>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</Layout>
