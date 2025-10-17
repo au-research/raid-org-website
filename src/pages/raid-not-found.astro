@@ -2,11 +2,20 @@
 import Layout from "@/layouts/main.astro";
 import backgroundLaptop from "@/images/backgrounds/background-laptop.webp";
 
-const title =
-  "If you believe this to be in error, please email ";
+const title = "If you believe this to be in error, please email ";
 ---
 <Layout title="main">
     <style>
+        .glass-container {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 3rem;
+        }
+
         .error-code {
             font-size: 120px;
             font-weight: 800;
@@ -27,9 +36,10 @@ const title =
 
         .subtitle {
             font-size: 18px;
-            margin-bottom: 32px;
-            opacity: 0.9;
+            margin-bottom: 0;
+            opacity: 0.95;
             line-height: 1.6;
+            text-align: center;
         }
 
         .icon {
@@ -38,9 +48,15 @@ const title =
             animation: bounce 2s ease-in-out infinite;
             text-align: center;
         }
+        
+        .email {
+            color: inherit;
+        }
+        
         .email:hover {
             text-decoration: underline;
         }
+        
         @keyframes float {
             0%, 100% {
                 transform: translateY(0px);
@@ -60,6 +76,9 @@ const title =
         }
 
         @media (max-width: 600px) {
+            .glass-container {
+                padding: 2rem 1.5rem;
+            }
             .error-code {
                 font-size: 80px;
             }
@@ -73,21 +92,20 @@ const title =
     </style>
 
 <div
-  class="bg-cover bg-center min-h-[610px] sm:min-h-[610px] relative bg-transparent sm:bg-raid"
+  class="bg-cover bg-center h-screen relative"
   style={`background-image: url(${backgroundLaptop.src});`}
 >
-  <div class="absolute inset-0 bg-white/70 sm:hidden"></div>
-  <div class="absolute top-16 w-full">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 sm:grid-cols-2 w-full">
-        <div class="p-6 mb-8 sm:mb-12">
-            <div class="icon">🔍</div>
-            <h2 class="title">RAiD not found</h2>
-            <h1 class="text-raidPrimary font-light text-2xl text-center sm:text-3xl">
-                {title} <a class="email" href="mailto:contact@raid.org" target="_blank">contact@raid.org</a>
-          </h1>
-        </div>
-      </div>
+  <div class="absolute inset-0 bg-black/20"></div>
+  <div class="absolute inset-0 flex items-center justify-center p-4">
+    <div class="glass-container max-w-3xl w-full text-center">
+      <div class="icon">🔍</div>
+      <h2 class="title">RAiD not found</h2>
+      <h1 class="text-raidPrimary font-light text-3xl sm:text-3xl">
+        {title}
+        <a class="email" href="mailto:contact@raid.org" target="_blank">
+          contact@raid.org
+        </a>
+      </h1>
     </div>
   </div>
 </div>
