@@ -3,6 +3,7 @@ import Layout from "@/layouts/main.astro";
 import backgroundLaptop from "@/images/backgrounds/background-laptop.webp";
 
 const title = "If you believe this to be in error, please email ";
+Astro.response.status = 404;
 ---
 <Layout title="main">
     <style>
@@ -31,7 +32,6 @@ const title = "If you believe this to be in error, please email ";
             margin-bottom: 16px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             text-align: center;
-            animation: float 3s ease-in-out infinite;
         }
 
         .subtitle {
@@ -45,7 +45,6 @@ const title = "If you believe this to be in error, please email ";
         .icon {
             font-size: 80px;
             margin-bottom: 20px;
-            animation: bounce 2s ease-in-out infinite;
             text-align: center;
         }
         
