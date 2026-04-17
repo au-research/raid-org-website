@@ -1,0 +1,61 @@
+---
+import Layout from "@/layouts/main.astro";
+
+export async function getStaticPaths() {
+  const posts = await Astro.glob(
+    "../../components/04-news-events-page/posts/*.astro"
+  );
+  return posts.map((post) => {
+    const slug = post.file.split("/").pop().replace(".astro", "");
+    return {
+      params: { slug },
+      props: { post },
+    };
+  });
+}
+
+const { post } = Astro.props;
+const { title, date, type, location } = post.metadata;
+const Post = post.default;
+
+const formattedDate = new Date(date).toLocaleDateString("en-AU", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<Layout title={`${title} | RAiD`}>
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-14">
+    <a
+      href="https://raid.org/news-events"
+      class="text-sm text-raidTextPrimary hover:underline"
+    >
+      &larr; Back to News &amp; Events
+    </a>
+
+    <div class="mt-8">
+      <p class="text-xs text-raidTextPrimary font-semibold uppercase tracking-wide">
+        {type === "event" ? "Event" : "News"}
+        {
+          location && (
+            <>
+              <span class="mx-2">·</span>
+              {location}
+            </>
+          )
+        }
+      </p>
+      <h1 class="text-raidTextPrimaryDark font-semibold text-2xl mt-2">
+        {title}
+      </h1>
+      <p class="text-sm text-gray-500 mt-1">{formattedDate}</p>
+    </div>
+
+    <hr class="my-8 border-raidGray" />
+
+    <div class="text-gray-700 leading-relaxed">
+      <Post />
+    </div>
+  </div>
+</Layout>

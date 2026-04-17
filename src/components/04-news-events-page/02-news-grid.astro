@@ -1,0 +1,48 @@
+---
+const allPosts = await Astro.glob("./posts/*.astro");
+
+const newsPosts = allPosts
+  .filter((p) => p.metadata?.type === "news")
+  .sort((a, b) => new Date(b.metadata.date) - new Date(a.metadata.date));
+---
+
+{
+  newsPosts.length > 0 && (
+    <div class="bg-raidGray">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+        <h2 class="text-raidPrimary font-semibold text-2xl mb-8">
+          Latest News
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {newsPosts.map((post) => {
+            const Post = post.default;
+            const { title, date } = post.metadata;
+            const slug = post.file.split("/").pop().replace(".astro", "");
+            return (
+              <div class="bg-white p-6 rounded shadow flex flex-col gap-3">
+                <p class="text-xs text-raidTextPrimary font-semibold uppercase tracking-wide">
+                  {new Date(date).toLocaleDateString("en-AU", {
+                    year: "numeric",
+                    month: "long",
+                  })}
+                </p>
+                <h3 class="text-base font-semibold text-raidTextPrimaryDark leading-snug">
+                  {title}
+                </h3>
+                <div class="text-sm text-gray-600 flex-grow">
+                  <Post />
+                </div>
+                <a
+                  href={`https://raid.org/news-events/${slug}`}
+                  class="text-sm text-raidTextPrimaryDark hover:underline font-semibold mt-auto"
+                >
+                  Read more &rarr;
+                </a>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}

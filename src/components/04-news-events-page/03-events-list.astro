@@ -1,0 +1,111 @@
+---
+const allPosts = await Astro.glob("./posts/*.astro");
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const eventPosts = allPosts
+  .filter((p) => p.metadata?.type === "event")
+  .sort((a, b) => new Date(a.metadata.date) - new Date(b.metadata.date));
+
+const upcoming = eventPosts.filter((p) => new Date(p.metadata.date) >= today);
+const past = eventPosts
+  .filter((p) => new Date(p.metadata.date) < today)
+  .reverse();
+---
+
+{
+  eventPosts.length > 0 && (
+    <div class="bg-white">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+        {upcoming.length > 0 && (
+          <>
+            <h2 class="text-raidPrimary font-semibold text-2xl mb-8">
+              Upcoming Events
+            </h2>
+            <div class="flex flex-col gap-8 mb-16">
+              {upcoming.map((post) => {
+                const Post = post.default;
+                const { title, date, location } = post.metadata;
+                const slug = post.file.split("/").pop().replace(".astro", "");
+                return (
+                  <div class="border-l-4 border-raidPrimary pl-6 py-2">
+                    <p class="text-sm text-raidTextPrimary font-semibold">
+                      {new Date(date).toLocaleDateString("en-AU", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                      {location && (
+                        <>
+                          <span class="mx-2 text-raidSecondary">·</span>
+                          {location}
+                        </>
+                      )}
+                    </p>
+                    <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                      {title}
+                    </h3>
+                    <div class="text-sm text-gray-600 mt-2 max-w-2xl">
+                      <Post />
+                    </div>
+                    <a
+                      href={`https://raid.org/news-events/${slug}`}
+                      class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+                    >
+                      Learn more &rarr;
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+
+        {past.length > 0 && (
+          <>
+            <h2 class="text-raidPrimary font-semibold text-2xl mb-8">
+              Past Events
+            </h2>
+            <div class="flex flex-col gap-8">
+              {past.map((post) => {
+                const Post = post.default;
+                const { title, date, location } = post.metadata;
+                const slug = post.file.split("/").pop().replace(".astro", "");
+                return (
+                  <div class="border-l-4 border-raidGray pl-6 py-2">
+                    <p class="text-sm text-raidTextPrimary font-semibold">
+                      {new Date(date).toLocaleDateString("en-AU", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                      {location && (
+                        <>
+                          <span class="mx-2 text-raidSecondary">·</span>
+                          {location}
+                        </>
+                      )}
+                    </p>
+                    <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                      {title}
+                    </h3>
+                    <div class="text-sm text-gray-600 mt-2 max-w-2xl">
+                      <Post />
+                    </div>
+                    <a
+                      href={`https://raid.org/news-events/${slug}`}
+                      class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+                    >
+                      View details &rarr;
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
