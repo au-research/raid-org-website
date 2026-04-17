@@ -25,8 +25,7 @@ const past = eventPosts
             </h2>
             <div class="flex flex-col gap-8 mb-16">
               {upcoming.map((post) => {
-                const Post = post.default;
-                const { title, date, location } = post.metadata;
+                const { title, date, location, excerpt } = post.metadata;
                 const slug = post.file.split("/").pop().replace(".astro", "");
                 return (
                   <div class="border-l-4 border-raidPrimary pl-6 py-2">
@@ -46,9 +45,7 @@ const past = eventPosts
                     <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
                       {title}
                     </h3>
-                    <div class="text-sm text-gray-600 mt-2 max-w-2xl">
-                      <Post />
-                    </div>
+                    <p class="text-sm text-gray-600 mt-2 max-w-2xl">{excerpt}</p>
                     <a
                       href={`https://raid.org/news-events/${slug}`}
                       class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
@@ -69,8 +66,7 @@ const past = eventPosts
             </h2>
             <div class="flex flex-col gap-8">
               {past.map((post) => {
-                const Post = post.default;
-                const { title, date, location } = post.metadata;
+                const { title, date, location, excerpt } = post.metadata;
                 const slug = post.file.split("/").pop().replace(".astro", "");
                 return (
                   <div class="border-l-4 border-raidGray pl-6 py-2">
@@ -90,9 +86,7 @@ const past = eventPosts
                     <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
                       {title}
                     </h3>
-                    <div class="text-sm text-gray-600 mt-2 max-w-2xl">
-                      <Post />
-                    </div>
+                    <p class="text-sm text-gray-600 mt-2 max-w-2xl">{excerpt}</p>
                     <a
                       href={`https://raid.org/news-events/${slug}`}
                       class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
