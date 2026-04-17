@@ -15,8 +15,7 @@ const newsPosts = allPosts
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {newsPosts.map((post) => {
-            const Post = post.default;
-            const { title, date } = post.metadata;
+            const { title, date, excerpt } = post.metadata;
             const slug = post.file.split("/").pop().replace(".astro", "");
             return (
               <div class="bg-white p-6 rounded shadow flex flex-col gap-3">
@@ -29,9 +28,7 @@ const newsPosts = allPosts
                 <h3 class="text-base font-semibold text-raidTextPrimaryDark leading-snug">
                   {title}
                 </h3>
-                <div class="text-sm text-gray-600 flex-grow">
-                  <Post />
-                </div>
+                <p class="text-sm text-gray-600 flex-grow">{excerpt}</p>
                 <a
                   href={`https://raid.org/news-events/${slug}`}
                   class="text-sm text-raidTextPrimaryDark hover:underline font-semibold mt-auto"
