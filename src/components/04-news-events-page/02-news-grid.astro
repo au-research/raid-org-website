@@ -5,7 +5,7 @@ const PAGE_SIZE = 3;
 
 const allPosts = await getCollection(
   "news-events",
-  ({ data }) => !data.draft && data.type === "news"
+  ({ data }) => (import.meta.env.DEV || !data.draft) && data.type === "news"
 );
 
 const newsPosts = allPosts.sort(
@@ -25,7 +25,12 @@ const totalPages = Math.ceil(newsPosts.length / PAGE_SIZE);
 
         <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {newsPosts.map((post, index) => (
-            <div class="news-card bg-white rounded shadow flex flex-col overflow-hidden" data-index={index}>
+            <div class="news-card bg-white rounded shadow flex flex-col overflow-hidden relative" data-index={index}>
+              {import.meta.env.DEV && post.data.draft && (
+                <span class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded z-10">
+                  Draft
+                </span>
+              )}
               {post.data.heroImage && (
                 <img
                   src={post.data.heroImage.src}
@@ -57,7 +62,7 @@ const totalPages = Math.ceil(newsPosts.length / PAGE_SIZE);
                   </div>
                 )}
                 <a
-                  href={`http://localhost:4321/news-events/${post.slug}`}
+                  href={`https://raid.org/news-events/${post.slug}`}
                   class="text-sm text-raidTextPrimaryDark hover:underline font-semibold mt-auto"
                 >
                   Read more &rarr;

@@ -7,18 +7,18 @@ type EventPost = CollectionEntry<"news-events"> & {
 
 const allEvents = (await getCollection(
   "news-events",
-  ({ data }) => !data.draft && data.type === "event"
+  ({ data }) => (import.meta.env.DEV || !data.draft) && data.type === "event"
 )) as EventPost[];
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
 const sorted = allEvents.sort(
-  (a, b) => a.data.date.getTime() - b.data.date.getTime()
+  (a, b) => a.data.eventDate.getTime() - b.data.eventDate.getTime()
 );
 
-const upcoming = sorted.filter((p) => p.data.date >= today);
-const past = sorted.filter((p) => p.data.date < today).reverse();
+const upcoming = sorted.filter((p) => p.data.eventDate >= today);
+const past = sorted.filter((p) => p.data.eventDate < today).reverse();
 ---
 
 {
@@ -32,9 +32,14 @@ const past = sorted.filter((p) => p.data.date < today).reverse();
             </h2>
             <div class="flex flex-col gap-8 mb-16">
               {upcoming.map((post) => (
-                <div class="border-l-4 border-raidPrimary pl-6 py-2">
+                <div class="border-l-4 border-raidPrimary pl-6 py-2 relative">
+                  {import.meta.env.DEV && post.data.draft && (
+                    <span class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded z-10">
+                      Draft
+                    </span>
+                  )}
                   <p class="text-sm text-raidTextPrimary font-semibold">
-                    {post.data.date.toLocaleDateString("en-AU", {
+                    {post.data.eventDate.toLocaleDateString("en-AU", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -58,7 +63,7 @@ const past = sorted.filter((p) => p.data.date < today).reverse();
                     </div>
                   )}
                   <a
-                    href={`http://localhost:4321/news-events/${post.slug}`}
+                    href={`https://raid.org/news-events/${post.slug}`}
                     class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
                   >
                     Learn more &rarr;
@@ -76,9 +81,14 @@ const past = sorted.filter((p) => p.data.date < today).reverse();
             </h2>
             <div class="flex flex-col gap-8">
               {past.map((post) => (
-                <div class="border-l-4 border-raidGray pl-6 py-2">
+                <div class="border-l-4 border-raidGray pl-6 py-2 relative">
+                  {import.meta.env.DEV && post.data.draft && (
+                    <span class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded z-10">
+                      Draft
+                    </span>
+                  )}
                   <p class="text-sm text-raidTextPrimary font-semibold">
-                    {post.data.date.toLocaleDateString("en-AU", {
+                    {post.data.eventDate.toLocaleDateString("en-AU", {
                       year: "numeric",
                       month: "long",
                       day: "numeric",
@@ -93,7 +103,7 @@ const past = sorted.filter((p) => p.data.date < today).reverse();
                     {post.data.summary}
                   </p>
                   <a
-                    href={`http://localhost:4321/news-events/${post.slug}`}
+                    href={`https://raid.org/news-events/${post.slug}`}
                     class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
                   >
                     View details &rarr;

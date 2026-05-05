@@ -3,9 +3,9 @@ import { getCollection } from "astro:content";
 import Layout from "@/layouts/main.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("news-events", ({ data }) => !data.draft);
+  const posts = await getCollection("news-events", ({ data }) => import.meta.env.DEV || !data.draft);
   return posts.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.slug }, // e.g. "news/2024-02-ardc-datacite"
     props: { entry },
   }));
 }
@@ -13,6 +13,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { title, date, type, author, tags, heroImage } = entry.data;
 const location = type === "event" ? entry.data.location : null;
+const eventDate = type === "event" ? entry.data.eventDate : null;
 const { Content } = await entry.render();
 
 const formattedDate = date.toLocaleDateString("en-AU", {
@@ -25,7 +26,7 @@ const formattedDate = date.toLocaleDateString("en-AU", {
 <Layout title={`${title} | RAiD`}>
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-14">
     <a
-      href="http://localhost:4321/news-events"
+      href="https://raid.org/news-events"
       class="text-sm text-raidTextPrimary hover:underline"
     >
       &larr; Back to News &amp; Events
@@ -57,7 +58,13 @@ const formattedDate = date.toLocaleDateString("en-AU", {
         {title}
       </h1>
       <p class="text-sm text-gray-500 mt-1">
-        {formattedDate}
+        {eventDate
+          ? eventDate.toLocaleDateString("en-AU", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          : formattedDate}
         {author && <span class="ml-2">· {author}</span>}
       </p>
       {

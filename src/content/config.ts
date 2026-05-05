@@ -48,6 +48,12 @@ const newsEvents = defineCollection({
           required_error:
             'location is required for events — e.g. "Online" or "Melbourne, Australia"',
         }),
+        eventDate: z.coerce.date({
+          required_error:
+            "eventDate is required for events — use YYYY-MM-DD format",
+          invalid_type_error:
+            "eventDate must be a valid date in YYYY-MM-DD format",
+        }),
       }),
     ]),
 });
