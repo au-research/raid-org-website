@@ -1,24 +1,21 @@
 ---
+import { getCollection } from "astro:content";
 import Layout from "@/layouts/main.astro";
 
 export async function getStaticPaths() {
-  const posts = await Astro.glob(
-    "../../components/04-news-events-page/posts/*.astro"
-  );
-  return posts.map((post) => {
-    const slug = post.file.split("/").pop().replace(".astro", "");
-    return {
-      params: { slug },
-      props: { post },
-    };
-  });
+  const posts = await getCollection("news-events", ({ data }) => !data.draft);
+  return posts.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
 }
 
-const { post } = Astro.props;
-const { title, date, type, location } = post.metadata;
-const Post = post.default;
+const { entry } = Astro.props;
+const { title, date, type, author, tags, heroImage } = entry.data;
+const location = type === "event" ? entry.data.location : null;
+const { Content } = await entry.render();
 
-const formattedDate = new Date(date).toLocaleDateString("en-AU", {
+const formattedDate = date.toLocaleDateString("en-AU", {
   year: "numeric",
   month: "long",
   day: "numeric",
@@ -28,11 +25,21 @@ const formattedDate = new Date(date).toLocaleDateString("en-AU", {
 <Layout title={`${title} | RAiD`}>
   <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-14">
     <a
-      href="https://raid.org/news-events"
+      href="http://localhost:4321/news-events"
       class="text-sm text-raidTextPrimary hover:underline"
     >
       &larr; Back to News &amp; Events
     </a>
+
+    {
+      heroImage && (
+        <img
+          src={heroImage.src}
+          alt={title}
+          class="w-full h-56 object-cover rounded mt-8"
+        />
+      )
+    }
 
     <div class="mt-8">
       <p class="text-xs text-raidTextPrimary font-semibold uppercase tracking-wide">
@@ -49,14 +56,27 @@ const formattedDate = new Date(date).toLocaleDateString("en-AU", {
       <h1 class="text-raidTextPrimaryDark font-semibold text-2xl mt-2">
         {title}
       </h1>
-      <p class="text-sm text-gray-500 mt-1">{formattedDate}</p>
+      <p class="text-sm text-gray-500 mt-1">
+        {formattedDate}
+        {author && <span class="ml-2">· {author}</span>}
+      </p>
+      {
+        tags && tags.length > 0 && (
+          <div class="flex flex-wrap gap-1 mt-3">
+            {tags.map((tag) => (
+              <span class="text-xs bg-raidGray text-raidTextPrimary px-2 py-0.5 rounded">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
     </div>
 
     <hr class="my-8 border-raidGray" />
 
-    <div class="text-gray-700 leading-relaxed">
-      <Post />
+    <div class="prose prose-a:text-raidTextPrimaryDark prose-a:underline max-w-none">
+      <Content />
     </div>
-
   </div>
 </Layout>

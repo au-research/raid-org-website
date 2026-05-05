@@ -1,9 +1,8 @@
 ---
 title: "2026 RAiD Global Community Meeting"
-date: "2026-04-01"
+date: "2026-05-20"
 type: "event"
 summary: "Join the RAiD community to hear updates from around the world."
-eventDate: "2026-05-20"
 location: "Online"
 ---
 

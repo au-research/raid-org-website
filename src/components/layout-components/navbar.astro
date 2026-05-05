@@ -2,23 +2,23 @@
 import raidLogoDark from "@/images/logos/raid-logo-dark.svg";
 
 const searchPageUrl =
-  import.meta.env.RAID_SEARCH_PAGE || "https://raid.org/search";
+  import.meta.env.RAID_SEARCH_PAGE || "http://localhost:4321/search";
 
 const links = [
   {
-    href: `https://raid.org/`,
+    href: `http://localhost:4321/`,
     text: "Home",
   },
   {
-    href: `https://raid.org/about`,
+    href: `http://localhost:4321/about`,
     text: "About",
   },
   {
-    href: `https://raid.org/contact`,
+    href: `http://localhost:4321/contact`,
     text: "Contact",
   },
   {
-    href: `https://raid.org/news-events`,
+    href: `http://localhost:4321/news-events`,
     text: "News & Events",
   },
   {
@@ -36,7 +36,7 @@ const links = [
       class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 py-4 items-center"
     >
       <a
-        href=`https://raid.org`
+        href=`http://localhost:4321`
         class="justify-self-center md:justify-self-start"
       >
         <div class="flex items-center">

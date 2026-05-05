@@ -27,7 +27,6 @@ Same as news, plus:
 | Field           | Required | Type         | Notes                                            |
 |-----------------|----------|--------------|--------------------------------------------------|
 | `type`          | Yes      | `"event"`    | Must be exactly `"event"`                        |
-| `eventDate`     | Yes      | `YYYY-MM-DD` | When the event happens — used for upcoming/past  |
 | `location` | Yes      | string       | e.g. `"Online"` or `"Melbourne, Australia"`      |
 
 ---
@@ -63,7 +62,6 @@ title: "Your Event Title"
 date: "2026-05-01"
 type: "event"
 summary: "A short summary shown on the listing page — keep it under 200 characters."
-eventDate: "2026-06-15"
 location: "Online"
 author: "Jane Smith"
 tags: ["webinar"]
@@ -89,7 +87,6 @@ If you make a mistake, the build stops with a clear message. Common errors:
 - Missing or bad `date` → `date must be a valid date in YYYY-MM-DD format`
 - Wrong `type` value → `type must be "news" or "event"`
 - `summary` too long → `summary must be 200 characters or fewer`
-- Missing `eventDate` on an event → `eventDate is required for events`
 - Missing `location` on an event → `location is required for events`
 
 ## Draft posts

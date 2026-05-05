@@ -1,21 +1,28 @@
 ---
-const allPosts = await Astro.glob("./posts/*.astro");
+import { getCollection, type CollectionEntry } from "astro:content";
+
+type EventPost = CollectionEntry<"news-events"> & {
+  data: Extract<CollectionEntry<"news-events">["data"], { type: "event" }>;
+};
+
+const allEvents = (await getCollection(
+  "news-events",
+  ({ data }) => !data.draft && data.type === "event"
+)) as EventPost[];
 
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
-const eventPosts = allPosts
-  .filter((p) => p.metadata?.type === "event")
-  .sort((a, b) => new Date(a.metadata.date) - new Date(b.metadata.date));
+const sorted = allEvents.sort(
+  (a, b) => a.data.date.getTime() - b.data.date.getTime()
+);
 
-const upcoming = eventPosts.filter((p) => new Date(p.metadata.date) >= today);
-const past = eventPosts
-  .filter((p) => new Date(p.metadata.date) < today)
-  .reverse();
+const upcoming = sorted.filter((p) => p.data.date >= today);
+const past = sorted.filter((p) => p.data.date < today).reverse();
 ---
 
 {
-  eventPosts.length > 0 && (
+  allEvents.length > 0 && (
     <div class="bg-white">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
         {upcoming.length > 0 && (
@@ -24,37 +31,40 @@ const past = eventPosts
               Upcoming Events
             </h2>
             <div class="flex flex-col gap-8 mb-16">
-              {upcoming.map((post) => {
-                const { title, date, location, excerpt } = post.metadata;
-                const slug = post.file.split("/").pop().replace(".astro", "");
-                return (
-                  <div class="border-l-4 border-raidPrimary pl-6 py-2">
-                    <p class="text-sm text-raidTextPrimary font-semibold">
-                      {new Date(date).toLocaleDateString("en-AU", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                      {location && (
-                        <>
-                          <span class="mx-2 text-raidSecondary">·</span>
-                          {location}
-                        </>
-                      )}
-                    </p>
-                    <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
-                      {title}
-                    </h3>
-                    <p class="text-sm text-gray-600 mt-2 max-w-2xl">{excerpt}</p>
-                    <a
-                      href={`https://raid.org/news-events/${slug}`}
-                      class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
-                    >
-                      Learn more &rarr;
-                    </a>
-                  </div>
-                );
-              })}
+              {upcoming.map((post) => (
+                <div class="border-l-4 border-raidPrimary pl-6 py-2">
+                  <p class="text-sm text-raidTextPrimary font-semibold">
+                    {post.data.date.toLocaleDateString("en-AU", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    <span class="mx-2 text-raidSecondary">·</span>
+                    {post.data.location}
+                  </p>
+                  <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-sm text-gray-600 mt-2 max-w-2xl">
+                    {post.data.summary}
+                  </p>
+                  {post.data.tags && post.data.tags.length > 0 && (
+                    <div class="flex flex-wrap gap-1 mt-2">
+                      {post.data.tags.map((tag) => (
+                        <span class="text-xs bg-raidGray text-raidTextPrimary px-2 py-0.5 rounded">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <a
+                    href={`http://localhost:4321/news-events/${post.slug}`}
+                    class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+                  >
+                    Learn more &rarr;
+                  </a>
+                </div>
+              ))}
             </div>
           </>
         )}
@@ -65,37 +75,31 @@ const past = eventPosts
               Past Events
             </h2>
             <div class="flex flex-col gap-8">
-              {past.map((post) => {
-                const { title, date, location, excerpt } = post.metadata;
-                const slug = post.file.split("/").pop().replace(".astro", "");
-                return (
-                  <div class="border-l-4 border-raidGray pl-6 py-2">
-                    <p class="text-sm text-raidTextPrimary font-semibold">
-                      {new Date(date).toLocaleDateString("en-AU", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                      {location && (
-                        <>
-                          <span class="mx-2 text-raidSecondary">·</span>
-                          {location}
-                        </>
-                      )}
-                    </p>
-                    <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
-                      {title}
-                    </h3>
-                    <p class="text-sm text-gray-600 mt-2 max-w-2xl">{excerpt}</p>
-                    <a
-                      href={`https://raid.org/news-events/${slug}`}
-                      class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
-                    >
-                      View details &rarr;
-                    </a>
-                  </div>
-                );
-              })}
+              {past.map((post) => (
+                <div class="border-l-4 border-raidGray pl-6 py-2">
+                  <p class="text-sm text-raidTextPrimary font-semibold">
+                    {post.data.date.toLocaleDateString("en-AU", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                    <span class="mx-2 text-raidSecondary">·</span>
+                    {post.data.location}
+                  </p>
+                  <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-sm text-gray-600 mt-2 max-w-2xl">
+                    {post.data.summary}
+                  </p>
+                  <a
+                    href={`http://localhost:4321/news-events/${post.slug}`}
+                    class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+                  >
+                    View details &rarr;
+                  </a>
+                </div>
+              ))}
             </div>
           </>
         )}

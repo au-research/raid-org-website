@@ -1,9 +1,8 @@
 ---
 title: "Navigating NHMRC/MRFF Open Science Policy Changes with ARDC: PIDs and RAiDs"
-date: "2026-04-20"
+date: "2026-05-13"
 type: "event"
 summary: "Join us in this third and final session – focused on persistent identifiers – of a 3-part series to explore the NHMRC/MRFF Open Science Policy and its impact."
-eventDate: "2026-05-13"
 location: "Online"
 ---
 
