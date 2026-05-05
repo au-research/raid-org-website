@@ -3,6 +3,7 @@ title: "ARDC and DataCite Announce Partnership to Deliver the RAiD Service"
 date: "2024-02-01"
 type: "news"
 summary: "The ARDC and DataCite have joined forces to deliver RAiD, a fast and reliable service for identifying and tracking research projects and activities."
+tags: ['DataCite']
 ---
 
 The ARDC and DataCite have joined forces to deliver RAiD, a fast and reliable service for identifying and tracking research projects and activities.

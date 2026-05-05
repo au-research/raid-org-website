@@ -1,6 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 
+const PAGE_SIZE = 3;
+
 const allPosts = await getCollection(
   "news-events",
   ({ data }) => !data.draft && data.type === "news"
@@ -9,6 +11,8 @@ const allPosts = await getCollection(
 const newsPosts = allPosts.sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime()
 );
+
+const totalPages = Math.ceil(newsPosts.length / PAGE_SIZE);
 ---
 
 {
@@ -18,9 +22,10 @@ const newsPosts = allPosts.sort(
         <h2 class="text-raidPrimary font-semibold text-2xl mb-8">
           Latest News
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {newsPosts.map((post) => (
-            <div class="bg-white rounded shadow flex flex-col overflow-hidden">
+
+        <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {newsPosts.map((post, index) => (
+            <div class="news-card bg-white rounded shadow flex flex-col overflow-hidden" data-index={index}>
               {post.data.heroImage && (
                 <img
                   src={post.data.heroImage.src}
@@ -61,7 +66,72 @@ const newsPosts = allPosts.sort(
             </div>
           ))}
         </div>
+
+        {totalPages > 1 && (
+          <div class="flex items-center justify-between mt-12">
+            <button
+              id="news-prev"
+              class="text-sm font-semibold text-raidTextPrimaryDark hover:underline disabled:text-gray-300 disabled:cursor-default"
+            >
+              &larr; Previous
+            </button>
+            <p id="news-page-indicator" class="text-sm text-gray-500" />
+            <button
+              id="news-next"
+              class="text-sm font-semibold text-raidTextPrimaryDark hover:underline disabled:text-gray-300 disabled:cursor-default"
+            >
+              Next &rarr;
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+<script is:inline define:vars={{ PAGE_SIZE, totalPages }}>
+  const cards = Array.from(document.querySelectorAll(".news-card"));
+  const grid = document.getElementById("news-grid");
+  const prevBtn = document.getElementById("news-prev");
+  const nextBtn = document.getElementById("news-next");
+  const indicator = document.getElementById("news-page-indicator");
+
+  let currentPage = 1;
+
+  function render() {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    cards.forEach((card, i) => (card.style.display = i >= start && i < end ? "" : "none"));
+    if (indicator) indicator.textContent = `Page ${currentPage} of ${totalPages}`;
+    if (prevBtn) prevBtn.disabled = currentPage === 1;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+  }
+
+  function equalizeAndLock() {
+    // Reset all constraints so we can measure natural heights
+    cards.forEach((c) => { c.style.display = ""; c.style.minHeight = ""; });
+    if (grid) grid.style.height = "";
+
+    // Find the tallest card at the current viewport width
+    const maxCardHeight = Math.max(...cards.map((c) => c.offsetHeight));
+
+    // Set every card to that height
+    cards.forEach((c) => (c.style.minHeight = maxCardHeight + "px"));
+
+    // Show current page and lock the grid to its rendered height
+    render();
+    if (grid) grid.style.height = grid.offsetHeight + "px";
+  }
+
+  equalizeAndLock();
+
+  // Re-measure on resize so mobile/tablet layouts stay correct
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(equalizeAndLock, 150);
+  });
+
+  prevBtn?.addEventListener("click", () => { if (currentPage > 1) { currentPage--; render(); } });
+  nextBtn?.addEventListener("click", () => { if (currentPage < totalPages) { currentPage++; render(); } });
+</script>
