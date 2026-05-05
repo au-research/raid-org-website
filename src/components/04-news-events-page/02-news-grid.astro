@@ -1,9 +1,18 @@
 ---
-const allPosts = await Astro.glob("./posts/*.astro");
+import { getCollection } from "astro:content";
 
-const newsPosts = allPosts
-  .filter((p) => p.metadata?.type === "news")
-  .sort((a, b) => new Date(b.metadata.date) - new Date(a.metadata.date));
+const PAGE_SIZE = 3;
+
+const allPosts = await getCollection(
+  "news-events",
+  ({ data }) => (import.meta.env.DEV || !data.draft) && data.type === "news"
+);
+
+const newsPosts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+const totalPages = Math.ceil(newsPosts.length / PAGE_SIZE);
 ---
 
 {
@@ -13,33 +22,121 @@ const newsPosts = allPosts
         <h2 class="text-raidPrimary font-semibold text-2xl mb-8">
           Latest News
         </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {newsPosts.map((post) => {
-            const { title, date, excerpt } = post.metadata;
-            const slug = post.file.split("/").pop().replace(".astro", "");
-            return (
-              <div class="bg-white p-6 rounded shadow flex flex-col gap-3">
+
+        <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {newsPosts.map((post, index) => (
+            <div class="news-card bg-white rounded shadow flex flex-col overflow-hidden relative" data-index={index}>
+              {import.meta.env.DEV && post.data.draft && (
+                <span class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded z-10">
+                  Draft
+                </span>
+              )}
+              {post.data.heroImage && (
+                <img
+                  src={post.data.heroImage.src}
+                  alt={post.data.title}
+                  class="w-full h-40 object-cover"
+                />
+              )}
+              <div class="p-6 flex flex-col gap-3 flex-grow">
                 <p class="text-xs text-raidTextPrimary font-semibold uppercase tracking-wide">
-                  {new Date(date).toLocaleDateString("en-AU", {
+                  {post.data.date.toLocaleDateString("en-AU", {
                     year: "numeric",
                     month: "long",
                   })}
+                  {post.data.author && (
+                    <span class="ml-2 text-gray-400">· {post.data.author}</span>
+                  )}
                 </p>
                 <h3 class="text-base font-semibold text-raidTextPrimaryDark leading-snug">
-                  {title}
+                  {post.data.title}
                 </h3>
-                <p class="text-sm text-gray-600 flex-grow">{excerpt}</p>
+                <p class="text-sm text-gray-600 flex-grow">{post.data.summary}</p>
+                {post.data.tags && post.data.tags.length > 0 && (
+                  <div class="flex flex-wrap gap-1">
+                    {post.data.tags.map((tag) => (
+                      <span class="text-xs bg-raidGray text-raidTextPrimary px-2 py-0.5 rounded">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 <a
-                  href={`https://raid.org/news-events/${slug}`}
+                  href={`https://raid.org/news-events/${post.slug}`}
                   class="text-sm text-raidTextPrimaryDark hover:underline font-semibold mt-auto"
                 >
                   Read more &rarr;
                 </a>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
+
+        {totalPages > 1 && (
+          <div class="flex items-center justify-between mt-12">
+            <button
+              id="news-prev"
+              class="text-sm font-semibold text-raidTextPrimaryDark hover:underline disabled:text-gray-300 disabled:cursor-default"
+            >
+              &larr; Previous
+            </button>
+            <p id="news-page-indicator" class="text-sm text-gray-500" />
+            <button
+              id="news-next"
+              class="text-sm font-semibold text-raidTextPrimaryDark hover:underline disabled:text-gray-300 disabled:cursor-default"
+            >
+              Next &rarr;
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )
 }
+
+<script is:inline define:vars={{ PAGE_SIZE, totalPages }}>
+  const cards = Array.from(document.querySelectorAll(".news-card"));
+  const grid = document.getElementById("news-grid");
+  const prevBtn = document.getElementById("news-prev");
+  const nextBtn = document.getElementById("news-next");
+  const indicator = document.getElementById("news-page-indicator");
+
+  let currentPage = 1;
+
+  function render() {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    cards.forEach((card, i) => (card.style.display = i >= start && i < end ? "" : "none"));
+    if (indicator) indicator.textContent = `Page ${currentPage} of ${totalPages}`;
+    if (prevBtn) prevBtn.disabled = currentPage === 1;
+    if (nextBtn) nextBtn.disabled = currentPage === totalPages;
+  }
+
+  function equalizeAndLock() {
+    // Reset all constraints so we can measure natural heights
+    cards.forEach((c) => { c.style.display = ""; c.style.minHeight = ""; });
+    if (grid) grid.style.height = "";
+
+    // Find the tallest card at the current viewport width
+    const maxCardHeight = Math.max(...cards.map((c) => c.offsetHeight));
+
+    // Set every card to that height
+    cards.forEach((c) => (c.style.minHeight = maxCardHeight + "px"));
+
+    // Show current page and lock the grid to its rendered height
+    render();
+    if (grid) grid.style.height = grid.offsetHeight + "px";
+  }
+
+  equalizeAndLock();
+
+  // Re-measure on resize so mobile/tablet layouts stay correct
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(equalizeAndLock, 150);
+  });
+
+  prevBtn?.addEventListener("click", () => { if (currentPage > 1) { currentPage--; render(); } });
+  nextBtn?.addEventListener("click", () => { if (currentPage < totalPages) { currentPage++; render(); } });
+</script>

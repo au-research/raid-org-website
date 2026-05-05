@@ -1,0 +1,18 @@
+---
+title: "Navigating NHMRC/MRFF Open Science Policy Changes with ARDC: PIDs and RAiDs"
+date: "2026-05-13"
+eventDate: "2026-06-01"
+type: "event"
+summary: "Join us in this third and final session – focused on persistent identifiers – of a 3-part series to explore the NHMRC/MRFF Open Science Policy and its impact."
+location: "Online"
+---
+
+Australia's research landscape is evolving with the introduction of the National Health and Medical Research Council (NHMRC) and Medical Research Future Fund (MRFF) Open Science Policy. But what does this mean in practice?
+
+This webinar is the third and final in a 3-part series hosted by the ARDC. The series is designed to help researchers understand the NHMRC and MRFF Open Science Policy and what it means for research practice in Australia.
+
+Persistent identifiers (PIDs) are essential tools for modern research, supporting attribution, discoverability, and transparency across the research ecosystem.
+
+In this session, we focus on how PIDs, including tools like RAiDs (Research Activity Identifiers), can help researchers better manage, connect and showcase their work in line with expectations from NHMRC and MRFF.
+
+[Learn more at the Australian Research Data Commons.](https://ardc.edu.au/event/navigating-nhmrc-mrff-open-science-policy-changes-with-ardc-pids-and-raids/)
