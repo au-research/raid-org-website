@@ -42,7 +42,11 @@ Inside of this Astro project, you'll see the following folders and files:
 │       ├── index.astro
 │       ├── news-events.astro          ← News & Events listing page
 │       ├── news-events/
-│       │   └── [...slug].astro        ← individual post pages
+│       │   ├── [...slug].astro        ← individual post pages
+│       │   ├── rss.xml.js             ← RSS 2.0 feed (news only)
+│       │   ├── tags.astro             ← all tags index
+│       │   └── tag/
+│       │       └── [tag].astro        ← per-tag filtered listing
 │       └── what-is-raid.astro
 └── package.json
 ```
@@ -84,6 +88,8 @@ Key features:
 - `heroImage` — processed through Astro's image pipeline (responsive sizes, lazy loading, zero CLS)
 - Events have `eventDate` (when the event occurs) separate from `date` (publication date)
 - Events are automatically split into Upcoming and Past based on `eventDate`
+- Tags are clickable — `/news-events/tag/{tag}` and `/news-events/tags` are auto-generated from collection contents
+- RSS feed at `/news-events/rss.xml` — updates on every build, no manual steps
 
 ---
 

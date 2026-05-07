@@ -131,3 +131,21 @@ If you make a mistake, the build stops with a clear message. Common errors:
 ## Draft posts
 
 Set `draft: true` to save a post without publishing it. It will not appear on the listing page or have a URL until you change it to `false`. In dev mode, draft posts are visible with a yellow "Draft" badge.
+
+---
+
+## Tags
+
+Tags are free-form strings — just add them to the `tags` array and they appear automatically across the site. No registration or configuration needed.
+
+- Tag badges on cards and post pages are clickable links to `/news-events/tag/{tag}`
+- All tags are listed at `/news-events/tags` with post counts
+- New tags appear in both pages the moment they are used in any published post
+
+---
+
+## RSS feed
+
+The news RSS feed is available at `/news-events/rss.xml`. It updates automatically on every build — no manual steps needed. Subscribe in any feed reader using that URL.
+
+Only published news posts (`type: "news"`, `draft: false`) appear in the feed. Events are not included.

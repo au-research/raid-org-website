@@ -6,6 +6,13 @@ import EventsList from "@/components/04-news-events-page/03-events-list.astro";
 ---
 
 <Layout title="News & Events | RAiD">
+  <link
+    slot="head"
+    rel="alternate"
+    type="application/rss+xml"
+    title="RAiD News"
+    href="/news-events/rss.xml"
+  />
   <NewsEventsIntro />
   <NewsGrid />
   <EventsList />
