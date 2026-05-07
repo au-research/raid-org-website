@@ -72,9 +72,12 @@ const formattedDate = date.toLocaleDateString("en-AU", {
         tags && tags.length > 0 && (
           <div class="flex flex-wrap gap-1 mt-3">
             {tags.map((tag) => (
-              <span class="text-xs bg-raidGray text-raidTextPrimary px-2 py-0.5 rounded">
+              <a
+                href={`/news-events/tag/${tag}`}
+                class="text-xs bg-raidGray text-raidTextPrimary hover:bg-raidPrimary hover:text-white px-2 py-0.5 rounded"
+              >
                 {tag}
-              </span>
+              </a>
             ))}
           </div>
         )

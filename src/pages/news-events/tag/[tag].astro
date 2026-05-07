@@ -1,0 +1,191 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import Layout from "@/layouts/main.astro";
+
+type EventPost = CollectionEntry<"news-events"> & {
+  data: Extract<CollectionEntry<"news-events">["data"], { type: "event" }>;
+};
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection(
+    "news-events",
+    ({ data }) => import.meta.env.DEV || !data.draft
+  );
+
+  const allTags = [...new Set(allPosts.flatMap((p) => p.data.tags ?? []))];
+
+  return allTags.map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: allPosts.filter((p) => p.data.tags?.includes(tag)),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+
+const newsPosts = posts
+  .filter((p) => p.data.type === "news")
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const eventPosts = posts
+  .filter((p) => p.data.type === "event") as EventPost[];
+
+const upcoming = eventPosts
+  .filter((p) => p.data.eventDate >= today)
+  .sort((a, b) => a.data.eventDate.getTime() - b.data.eventDate.getTime());
+
+const past = eventPosts
+  .filter((p) => p.data.eventDate < today)
+  .sort((a, b) => b.data.eventDate.getTime() - a.data.eventDate.getTime());
+---
+
+<Layout title={`Tagged: ${tag} | RAiD`}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-14">
+    <a
+      href="/news-events"
+      class="text-sm text-raidTextPrimary hover:underline"
+    >
+      &larr; Back to News &amp; Events
+    </a>
+
+    <div class="mt-8 mb-12">
+      <p class="text-xs text-raidTextPrimary font-semibold uppercase tracking-wide">Tag</p>
+      <h1 class="text-raidTextPrimaryDark font-semibold text-3xl mt-1">{tag}</h1>
+      <p class="text-sm text-gray-500 mt-1">{posts.length} {posts.length === 1 ? "post" : "posts"}</p>
+    </div>
+
+    {newsPosts.length > 0 && (
+      <section class="mb-16">
+        <h2 class="text-raidPrimary font-semibold text-2xl mb-8">News</h2>
+        <div class="flex flex-col gap-6">
+          {newsPosts.map((post) => (
+            <div class="border-l-4 border-raidPrimary pl-6 py-2">
+              <p class="text-xs text-raidTextPrimary font-semibold uppercase tracking-wide">
+                {post.data.date.toLocaleDateString("en-AU", {
+                  year: "numeric",
+                  month: "long",
+                })}
+                {post.data.author && (
+                  <span class="ml-2 text-gray-400">· {post.data.author}</span>
+                )}
+              </p>
+              <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-gray-600 mt-2 max-w-2xl">{post.data.summary}</p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-2">
+                  {post.data.tags.map((t) => (
+                    <a
+                      href={`/news-events/tag/${t}`}
+                      class={`text-xs px-2 py-0.5 rounded ${t === tag ? "bg-raidPrimary text-white" : "bg-raidGray text-raidTextPrimary hover:bg-raidPrimary hover:text-white"}`}
+                    >
+                      {t}
+                    </a>
+                  ))}
+                </div>
+              )}
+              <a
+                href={`/news-events/${post.slug}`}
+                class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+              >
+                Read more &rarr;
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {upcoming.length > 0 && (
+      <section class="mb-16">
+        <h2 class="text-raidPrimary font-semibold text-2xl mb-8">Upcoming Events</h2>
+        <div class="flex flex-col gap-6">
+          {upcoming.map((post) => (
+            <div class="border-l-4 border-raidPrimary pl-6 py-2">
+              <p class="text-sm text-raidTextPrimary font-semibold">
+                {post.data.eventDate.toLocaleDateString("en-AU", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+                <span class="mx-2 text-raidSecondary">·</span>
+                {post.data.location}
+              </p>
+              <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-gray-600 mt-2 max-w-2xl">{post.data.summary}</p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-2">
+                  {post.data.tags.map((t) => (
+                    <a
+                      href={`/news-events/tag/${t}`}
+                      class={`text-xs px-2 py-0.5 rounded ${t === tag ? "bg-raidPrimary text-white" : "bg-raidGray text-raidTextPrimary hover:bg-raidPrimary hover:text-white"}`}
+                    >
+                      {t}
+                    </a>
+                  ))}
+                </div>
+              )}
+              <a
+                href={`/news-events/${post.slug}`}
+                class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+              >
+                Learn more &rarr;
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {past.length > 0 && (
+      <section>
+        <h2 class="text-raidPrimary font-semibold text-2xl mb-8">Past Events</h2>
+        <div class="flex flex-col gap-6">
+          {past.map((post) => (
+            <div class="border-l-4 border-raidGray pl-6 py-2">
+              <p class="text-sm text-raidTextPrimary font-semibold">
+                {post.data.eventDate.toLocaleDateString("en-AU", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+                <span class="mx-2 text-raidSecondary">·</span>
+                {post.data.location}
+              </p>
+              <h3 class="text-lg font-semibold text-raidTextPrimaryDark mt-1">
+                {post.data.title}
+              </h3>
+              <p class="text-sm text-gray-600 mt-2 max-w-2xl">{post.data.summary}</p>
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-1 mt-2">
+                  {post.data.tags.map((t) => (
+                    <a
+                      href={`/news-events/tag/${t}`}
+                      class={`text-xs px-2 py-0.5 rounded ${t === tag ? "bg-raidPrimary text-white" : "bg-raidGray text-raidTextPrimary hover:bg-raidPrimary hover:text-white"}`}
+                    >
+                      {t}
+                    </a>
+                  ))}
+                </div>
+              )}
+              <a
+                href={`/news-events/${post.slug}`}
+                class="inline-block mt-3 text-sm text-raidTextPrimaryDark hover:underline font-semibold"
+              >
+                View details &rarr;
+              </a>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Layout>

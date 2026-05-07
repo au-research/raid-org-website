@@ -56,9 +56,12 @@ const totalPages = Math.ceil(newsPosts.length / PAGE_SIZE);
                 {post.data.tags && post.data.tags.length > 0 && (
                   <div class="flex flex-wrap gap-1">
                     {post.data.tags.map((tag) => (
-                      <span class="text-xs bg-raidGray text-raidTextPrimary px-2 py-0.5 rounded">
+                      <a
+                        href={`/news-events/tag/${tag}`}
+                        class="text-xs bg-raidGray text-raidTextPrimary hover:bg-raidPrimary hover:text-white px-2 py-0.5 rounded"
+                      >
                         {tag}
-                      </span>
+                      </a>
                     ))}
                   </div>
                 )}
