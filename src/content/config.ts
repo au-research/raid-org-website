@@ -22,6 +22,7 @@ const newsEvents = defineCollection({
         author: z.string().optional(),
         tags: z.array(z.string()).optional(),
         heroImage: image().optional(),
+        heroImageAlt: z.string().optional(),
         draft: z.boolean().default(false),
       }),
 
@@ -43,6 +44,7 @@ const newsEvents = defineCollection({
         author: z.string().optional(),
         tags: z.array(z.string()).optional(),
         heroImage: image().optional(),
+        heroImageAlt: z.string().optional(),
         draft: z.boolean().default(false),
         location: z.string({
           required_error:

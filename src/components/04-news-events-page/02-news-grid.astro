@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 
 const PAGE_SIZE = 3;
 
@@ -32,9 +33,9 @@ const totalPages = Math.ceil(newsPosts.length / PAGE_SIZE);
                 </span>
               )}
               {post.data.heroImage && (
-                <img
-                  src={post.data.heroImage.src}
-                  alt={post.data.title}
+                <Image
+                  src={post.data.heroImage}
+                  alt={post.data.heroImageAlt ?? ""}
                   class="w-full h-40 object-cover"
                 />
               )}

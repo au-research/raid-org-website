@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "@/layouts/main.astro";
 
 export async function getStaticPaths() {
@@ -11,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, date, type, author, tags, heroImage } = entry.data;
+const { title, date, type, author, tags, heroImage, heroImageAlt } = entry.data;
 const location = type === "event" ? entry.data.location : null;
 const eventDate = type === "event" ? entry.data.eventDate : null;
 const { Content } = await entry.render();
@@ -34,9 +35,9 @@ const formattedDate = date.toLocaleDateString("en-AU", {
 
     {
       heroImage && (
-        <img
-          src={heroImage.src}
-          alt={title}
+        <Image
+          src={heroImage}
+          alt={heroImageAlt ?? ""}
           class="w-full h-56 object-cover rounded mt-8"
         />
       )
