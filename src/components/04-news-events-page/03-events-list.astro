@@ -56,9 +56,12 @@ const past = sorted.filter((p) => p.data.eventDate < today).reverse();
                   {post.data.tags && post.data.tags.length > 0 && (
                     <div class="flex flex-wrap gap-1 mt-2">
                       {post.data.tags.map((tag) => (
-                        <span class="text-xs bg-raidGray text-raidTextPrimary px-2 py-0.5 rounded">
+                        <a
+                          href={`/news-events/tag/${tag}`}
+                          class="text-xs bg-raidGray text-raidTextPrimary hover:bg-raidPrimary hover:text-white px-2 py-0.5 rounded"
+                        >
                           {tag}
-                        </span>
+                        </a>
                       ))}
                     </div>
                   )}

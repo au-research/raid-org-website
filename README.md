@@ -12,7 +12,23 @@ Inside of this Astro project, you'll see the following folders and files:
 │   │   ├── 01-index-page/
 │   │   ├── 02-about-page/
 │   │   ├── 03-what-is-raid/
+│   │   ├── 04-news-events-page/
+│   │   │   ├── 01-news-events-intro.astro
+│   │   │   ├── 02-news-grid.astro
+│   │   │   ├── 03-events-list.astro
+│   │   │   └── HOW-TO-CREATE-A-POST.md
 │   │   └── layout-components/
+│   ├── content/
+│   │   ├── config.ts                  ← Zod schema for all collections
+│   │   └── news-events/
+│   │       ├── news/
+│   │       │   └── YYYY-MM-post-name/ ← one folder per post
+│   │       │       ├── index.md
+│   │       │       └── hero.webp      ← images co-located with post
+│   │       └── events/
+│   │           └── YYYY-MM-event-name/
+│   │               ├── index.md
+│   │               └── hero.webp
 │   ├── images/
 │   │   ├── backgrounds/
 │   │   ├── icons/
@@ -24,6 +40,13 @@ Inside of this Astro project, you'll see the following folders and files:
 │       ├── about.astro
 │       ├── contact.astro
 │       ├── index.astro
+│       ├── news-events.astro          ← News & Events listing page
+│       ├── news-events/
+│       │   ├── [...slug].astro        ← individual post pages
+│       │   ├── rss.xml.js             ← RSS 2.0 feed (news only)
+│       │   ├── tags.astro             ← all tags index
+│       │   └── tag/
+│       │       └── [tag].astro        ← per-tag filtered listing
 │       └── what-is-raid.astro
 └── package.json
 ```
@@ -47,6 +70,28 @@ The search functionality uses the DataCite API to find RAiD records. The impleme
   - [https://raid.org/102.100.100/601891](https://raid.org/102.100.100/601891) ➡️ [https://static.prod.raid.org.au/raids/102.100.100/601891/](https://static.prod.raid.org.au/raids/102.100.100/601891)
 
 The resolver functionality is implemented through the 404 page. When a user accesses a URL with a RAiD pattern (e.g., `raid.org/102.100.100/601891`), the 404.html page captures the route, extracts the RAiD handle, validates it against an API, and redirects to the appropriate environment. This approach allows for dynamic resolution without requiring server-side processing.
+
+## 📰 News & Events
+
+The News & Events section is powered by Astro Content Collections with Zod schema validation.
+
+- **Listing page**: `/news-events` — shows a paginated news grid and upcoming/past events list
+- **Individual post pages**: `/news-events/[slug]` — full Markdown content with image support
+
+Posts are Markdown files validated against a strict schema. Invalid frontmatter (missing fields, wrong types, summaries over 200 characters) fails the build with a clear error message. The VS Code Astro extension surfaces these errors inline as you type.
+
+**To create a post**, follow the guide in [`src/components/04-news-events-page/HOW-TO-CREATE-A-POST.md`](src/components/04-news-events-page/HOW-TO-CREATE-A-POST.md).
+
+Key features:
+- `type: "news"` or `type: "event"` — each type enforces its own required fields
+- `draft: true` — hides a post in production; visible in dev with a yellow badge
+- `heroImage` — processed through Astro's image pipeline (responsive sizes, lazy loading, zero CLS)
+- Events have `eventDate` (when the event occurs) separate from `date` (publication date)
+- Events are automatically split into Upcoming and Past based on `eventDate`
+- Tags are clickable — `/news-events/tag/{tag}` and `/news-events/tags` are auto-generated from collection contents
+- RSS feed at `/news-events/rss.xml` — updates on every build, no manual steps
+
+---
 
 ## 📝 Editing Content
 
