@@ -5,7 +5,6 @@ type: "news"
 summary: "Recordings and slides are now available from the three RAiD Global Community Meeting sessions held on 20 May 2026, with updates from Australia, the Netherlands, the US, and Canada."
 author: "Matthias Liffers"
 tags: ["community meeting", "operating alliance", "ARDC", "SURF", "SDSC"]
-draft: true
 ---
 
 On 20 May 2026, over 200 participants across three time zones joined the RAiD Global Community Meeting. Sessions were held for the Asia Pacific, Europe/Middle East/Africa, and Americas regions, each featuring updates on RAiD's growing global federation alongside use cases from research organisations actively adopting the identifier.
