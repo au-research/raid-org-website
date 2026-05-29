@@ -1,6 +1,6 @@
 ---
 title: "RAiD Expansion to US Strengthens Global Research Transparency and Tracking"
-date: "2026-03-17"
+date: "2025-03-17"
 type: "news"
 summary: "The San Diego Supercomputer Center (SDSC) has received a National Science Foundation (NSF) grant to set up an inaugural Research Activity Identifier (RAiD)."
 tags: ['SDSC', 'NSF']
